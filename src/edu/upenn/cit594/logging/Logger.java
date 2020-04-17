@@ -13,42 +13,79 @@ import java.io.*;
 public class Logger {
 
 	private static Logger logger;
-	private static FileWriter fw;
+	// private static FileWriter fw;
+	private static File file;
 	private static String loggerFilename = "";
 	
-	// if the logger filename exists, it should append new data to it
-	// if it doesn't exist, it should create the new file
+	private Logger() {
+		if(loggerFilename.equals("")) {
+			System.out.println("Input filename for logger");
+			return;
+		}
+		file = new File(loggerFilename);
+	}
+	
+	public static Logger getLoggerInstance() {
+		if(logger == null) {
+			logger = new Logger();
+		}
+		return logger;
+	}
+	
+	/*
+	 * Sets logger filename
+	 * if the logger filename exists, it should append new data to it
+	 * if it doesn't exist, it should create the new file
+	 */
+	public static void setLogFile(String filename) {
+		if(file.exists()) return;
+		loggerFilename = filename;
+	}
 	
 	
 	/*
-	 *  When the program starts, log the current time using System.currentTimeMillis() 
+	 *  When the program starts, log the current time using System.currentTimeMillis()
+	 *  
+	 *   argsFormat: [fileformat, filename, filename, filename, logfilename]
 	 */
-	public void logProgramStart(String[] runtimeArgs) {
+	public void log(String[] runtimeArgs) {
 		
+		StringBuilder sb = new StringBuilder();
+		for(String s : runtimeArgs) {
+			sb.append(s + " ");
+		}
+		sb.deleteCharAt(sb.length()-1); // remove the last whitespace
+		log(sb.toString());
+		
+	}
+	
+	public void log(int choice) {
+		// should we do the valid choice checking here?
+		
+		String writeChoice = "";
+		if(choice < 7 && choice >= 0) {
+			writeChoice = "User Choice: " + Integer.toString(choice);
+		}
+		else if (choice > 1000) { // check valid zip
+			writeChoice = "ZipCode: " + Integer.toString(choice);
+		}
+		log(writeChoice);		
 	}
 	
 	/*
 	 *  When an input file is opened, write current time and name of file
 	 */
-	public void logFileOpen(String filename) {
-		
+	public void log(String string) {
+		try {
+			Writer w = new BufferedWriter(new FileWriter(file, true));
+			w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
+			w.close();
+		} catch (IOException e) {
+			System.err.println("ERROR: Logger cannot write");
+			e.printStackTrace();
+		}
 	}
-	
-	/*
-	 *  When a user makes a choice in Step#0, write current time and user's selection
-	 */
-	public void logChoice(String choice) {
 		
-	}
-	
-	/*
-	 *  When a user enters a zipCode in Step#3, 4, 5 write current time and specificed zip code
-	 */
-	public void logZip(int zipCode) {
-		
-	}
-	
-	
 	public static void main(String[] args) {
 		
 	}
