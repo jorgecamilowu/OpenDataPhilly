@@ -50,14 +50,14 @@ public class ParkingFine {
 	
 	@Override
 	public String toString() {
-		String output = "";
-		output += "TimeStamp: " + this.timestamp + "\n" +
+		return( 
+				"TimeStamp: " + this.timestamp + "\n" +
 					"Fine Amount: " + this.fine + "\n" +
 					"Description: " + this.description + "\n" + 
 					"Vechicle Identifier: " + this.vehicleIdentifier + "\n" +
 					"Violation Identifier: " + this.violationIdentifier + "\n" +
 					"State Plate: " + this.stateLicensePlate + "\n" +
-					"ZipCode: " + this.zipcode + "\n\n";
-		return output;
+					"ZipCode: " + this.zipcode + "\n\n"
+				);
 	}
 }
