@@ -12,9 +12,9 @@ import java.io.*;
 
 public class Logger {
 
-	private static Logger logger;
+	private static Logger logger = null;
 	// private static FileWriter fw;
-	private static File file;
+	private static File file = null;
 	private static String loggerFilename = "";
 	
 	private Logger() {
@@ -38,10 +38,10 @@ public class Logger {
 	 * if it doesn't exist, it should create the new file
 	 */
 	public static void setLogFile(String filename) {
-		if(file.exists()) return;
+
 		loggerFilename = filename;
+		
 	}
-	
 	
 	/*
 	 *  When the program starts, log the current time using System.currentTimeMillis()
@@ -56,7 +56,6 @@ public class Logger {
 		}
 		sb.deleteCharAt(sb.length()-1); // remove the last whitespace
 		log(sb.toString());
-		
 	}
 	
 	public void log(int choice) {
@@ -88,7 +87,11 @@ public class Logger {
 		
 	public static void main(String[] args) {
 		
+		Logger.setLogFile("log.txt");
+		Logger l = Logger.getLoggerInstance();
+		
+		l.log("hi");
+		l.log(3);
 	}
-	
 	
 }
