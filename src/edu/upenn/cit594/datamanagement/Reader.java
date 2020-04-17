@@ -6,5 +6,5 @@ import edu.upenn.cit594.data.ZipCode;
 public interface Reader<E> {
 	
 	//return value not defined yet.
-	public Set<E> reader();
+	public Set<E> reader(String filename);
 }
