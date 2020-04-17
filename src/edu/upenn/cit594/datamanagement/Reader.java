@@ -5,5 +5,5 @@ import java.util.List;
 public interface Reader<E> {
 	
 	//return value not defined yet.
-	public List<E> reader(String filename);
+	public List<E> read(String filename);
 }

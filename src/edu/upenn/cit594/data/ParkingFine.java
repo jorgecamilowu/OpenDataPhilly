@@ -56,7 +56,7 @@ public class ParkingFine {
 					"Description: " + this.description + "\n" + 
 					"Vechicle Identifier: " + this.vehicleIdentifier + "\n" +
 					"Violation Identifier: " + this.violationIdentifier + "\n" +
-					"ZipCode: " + this.zipcode;
+					"ZipCode: " + this.zipcode + "\n\n";
 		return output;
 	}
 }
