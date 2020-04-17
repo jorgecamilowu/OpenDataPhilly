@@ -9,13 +9,13 @@ public class ParkingFine {
 	private String stateLicensePlate;
 	private int zipcode;
 	
-	public ParkingFine(String timestamp, double fine, String description, int vehicle, int violation, String plate, int zipcode) {
+	public ParkingFine(String timestamp, double fine, String description, int vehicle, int violation, String state, int zipcode) {
 		this.timestamp = timestamp;
 		this.fine = fine;
 		this.description = description;
 		this.vehicleIdentifier = vehicle;
 		this.violationIdentifier = violation;
-		this.stateLicensePlate = plate;
+		this.stateLicensePlate = state;
 		this.zipcode = zipcode;
 	}
 
@@ -56,6 +56,7 @@ public class ParkingFine {
 					"Description: " + this.description + "\n" + 
 					"Vechicle Identifier: " + this.vehicleIdentifier + "\n" +
 					"Violation Identifier: " + this.violationIdentifier + "\n" +
+					"State Plate: " + this.stateLicensePlate + "\n" +
 					"ZipCode: " + this.zipcode + "\n\n";
 		return output;
 	}

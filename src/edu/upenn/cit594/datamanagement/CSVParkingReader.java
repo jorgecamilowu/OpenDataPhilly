@@ -29,17 +29,15 @@ public class CSVParkingReader implements Reader<ParkingFine> {
 					double fine = Double.parseDouble(parkingInfo[1]);
 					String description = parkingInfo[2];
 					int vehicleIdentifier = Integer.parseInt(parkingInfo[3]);
-					String plate = parkingInfo[4];
+					String state = parkingInfo[4];
 					int violationIdentifier = Integer.parseInt(parkingInfo[5]);
 					int zipcode = Integer.parseInt(parkingInfo[6]);
 					
-					ParkingFine parkingFineObject = new ParkingFine(timestamp, fine, description, vehicleIdentifier, violationIdentifier, plate, zipcode);
+					ParkingFine parkingFineObject = new ParkingFine(timestamp, fine, description, vehicleIdentifier, violationIdentifier, state, zipcode);
 					output.add(parkingFineObject);
 					
 				} catch (NumberFormatException e) {
-					//if a not able to convert, move on to next iteration
-					e.printStackTrace();
-//					System.out.println("couldn't convert");
+					//skip badly formatted data rows 
 					continue;
 				}
 			}
@@ -50,10 +48,10 @@ public class CSVParkingReader implements Reader<ParkingFine> {
 		}
 		return output;
 	}
-//	public static void main(String[] args) {
-//		Reader test = new CSVParkingReader();
-//		List<ParkingFine> result = test.read("parking.csv");
-//		System.out.println(result);
-//	}
+	public static void main(String[] args) {
+		Reader test = new CSVParkingReader();
+		List<ParkingFine> result = test.read("parking.csv");
+		System.out.println("in csv: " + result.size());
+	}
 
 }
