@@ -7,7 +7,7 @@ import edu.upenn.cit594.data.ZipCode;
 public class PopulationFileReader implements Reader {
 
 	@Override
-	public Set<ZipCode> reader(String filename) {
+	public Set<Object> reader(String filename) {
 		// TODO Auto-generated method stub
 		return null;
 	}
