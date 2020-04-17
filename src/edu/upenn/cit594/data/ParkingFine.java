@@ -60,4 +60,5 @@ public class ParkingFine {
 					"ZipCode: " + this.zipcode + "\n\n";
 		return output;
 	}
+	// test commit
 }
