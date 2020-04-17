@@ -1,13 +1,11 @@
 package edu.upenn.cit594.datamanagement;
 
-import java.util.Set;
-
-import edu.upenn.cit594.data.ZipCode;
+import java.util.List;
 
 public class PopulationFileReader implements Reader {
 
 	@Override
-	public Set<Object> reader(String filename) {
+	public List<Object> reader(String filename) {
 		// TODO Auto-generated method stub
 		return null;
 	}
