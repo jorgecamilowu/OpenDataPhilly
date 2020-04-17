@@ -4,7 +4,7 @@ import java.util.Set;
 
 import edu.upenn.cit594.data.ZipCode;
 
-public class JSONReader implements Reader {
+public class JSONParkingReader implements Reader {
 
 	@Override
 	public Set<ZipCode> reader() {

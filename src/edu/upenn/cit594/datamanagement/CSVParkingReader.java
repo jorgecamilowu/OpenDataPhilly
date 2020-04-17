@@ -4,7 +4,7 @@ import java.util.Set;
 
 import edu.upenn.cit594.data.ZipCode;
 
-public class CSVReader implements Reader {
+public class CSVParkingReader implements Reader {
 
 	@Override
 	public Set<ZipCode> reader() {

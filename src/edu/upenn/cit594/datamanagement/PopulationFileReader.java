@@ -4,7 +4,7 @@ import java.util.Set;
 
 import edu.upenn.cit594.data.ZipCode;
 
-public class TextReader implements Reader {
+public class PopulationFileReader implements Reader {
 
 	@Override
 	public Set<ZipCode> reader() {
