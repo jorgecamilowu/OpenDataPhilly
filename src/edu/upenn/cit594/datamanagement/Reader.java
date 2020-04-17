@@ -3,8 +3,8 @@ import java.util.Set;
 
 import edu.upenn.cit594.data.ZipCode;
 
-public interface Reader {
+public interface Reader<E> {
 	
 	//return value not defined yet.
-	public Set<ZipCode> reader();
+	public Set<E> reader();
 }

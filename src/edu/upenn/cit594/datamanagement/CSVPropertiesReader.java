@@ -2,12 +2,12 @@ package edu.upenn.cit594.datamanagement;
 
 import java.util.Set;
 
-import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.data.Properties;
 
-public class CSVPropertiesReader implements Reader {
+public class CSVPropertiesReader implements Reader<Properties> {
 
 	@Override
-	public Set<ZipCode> reader() {
+	public Set<Properties> reader() {
 		// TODO Auto-generated method stub
 		return null;
 	}
