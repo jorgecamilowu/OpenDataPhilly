@@ -63,23 +63,26 @@ public class Main {
 			p = new JSONProcessor();
 		}
 		
+		// CREATE LOGGER HERE
+		
 		// GET CONSOLE WRITER
 		ConsoleWriter cw = new ConsoleWriter();
 		cw.run();
 		// create separte method in main class
 		int userChoice;
+		
 		while(true) {
 			userChoice = cw.getUserChoice();
 			if(userChoice < 0 || userChoice > 6) {
-				System.out.println("Invalid selection. Terminating"); return;
+				System.out.println("Invalid selection. Terminating"); 
 			}
 			if(userChoice == 0) {
-				System.out.println("Exiting. Goodbye!"); return;
+				break;
 			}
-			// pass into PROCESSOR
+			// else pass into PROCESSOR
 		}
-		// create Logger here
-		
+		// CLOSE LOGGER HERE
+		System.out.println("Exiting. Goodbye!"); 
 	}
 	
 }
