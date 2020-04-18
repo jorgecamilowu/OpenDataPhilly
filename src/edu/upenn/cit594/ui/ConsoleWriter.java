@@ -14,13 +14,7 @@ public class ConsoleWriter {
 	public static void run() {
 		consoleWriter = new ConsoleWriter();
 		System.out.println("Welcome to OpenDataPhilly!\nPlease type your selection:");
-		displayPrompt();
-		int choice = getUserChoice();
-		while(choice < 0 || choice >6) {
-			System.out.println("Invalid selection. \n");
-			choice = getUserChoice();
-		}
-		
+		displayPrompt();		
 	}
 	
 	public static void displayPrompt() {

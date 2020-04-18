@@ -8,6 +8,7 @@ import edu.upenn.cit594.processor.JSONProcessor;
 import edu.upenn.cit594.processor.Processor;
 // not able to move into package edu.upenn.cit594
 import edu.upenn.cit594.processor.TextProcessor;
+import edu.upenn.cit594.ui.ConsoleWriter;
 
 
 /**
@@ -62,7 +63,21 @@ public class Main {
 			p = new JSONProcessor();
 		}
 		
-		// create ConsoleWriter here
+		// GET CONSOLE WRITER
+		ConsoleWriter cw = new ConsoleWriter();
+		cw.run();
+		int userChoice;
+		while(true) {
+			userChoice = cw.getUserChoice();
+			if(userChoice < 0 || userChoice > 6) {
+				System.out.println("Invalid selection. Terminating"); return;
+			}
+			if(userChoice == 0) {
+				System.out.println("Exiting. Goodbye!"); return;
+			}
+			
+		}
+		
 		// create Logger here
 		
 	}
