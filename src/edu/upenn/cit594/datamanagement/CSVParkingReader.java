@@ -50,8 +50,12 @@ public class CSVParkingReader implements Reader<ParkingFine> {
 	}
 	public static void main(String[] args) {
 		Reader test = new CSVParkingReader();
+		long start = System.currentTimeMillis();
 		List<ParkingFine> result = test.read("parking.csv");
-		System.out.println("in csv: " + result.size());
+		long end = System.currentTimeMillis();
+		long time = end-start;
+		System.out.println("Run Time: " + time);
+//		System.out.println("in csv: " + result.size());
 	}
 
 }

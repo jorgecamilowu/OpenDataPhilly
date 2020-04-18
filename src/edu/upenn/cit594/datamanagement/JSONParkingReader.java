@@ -61,8 +61,12 @@ public class JSONParkingReader implements Reader<ParkingFine> {
 	}
 	public static void main(String[] args) {
 		Reader test = new JSONParkingReader();
+		long start = System.currentTimeMillis();
 		List<ParkingFine> result = test.read("parking.json");
-		System.out.println(result);
+		long end = System.currentTimeMillis();
+		long time = end-start;
+		System.out.println("Run Time: " + time);
+//		System.out.println(result);
 	}
 
 }

@@ -25,7 +25,6 @@ public class PopulationFileReader implements Reader {
 					continue;
 				}
 				try {
-					
 					int zipcode = Integer.parseInt(rowInfo[0]);
 					int population = Integer.parseInt(rowInfo[1]);
 					ZipCode zipInstance = new ZipCode(zipcode);
@@ -46,11 +45,15 @@ public class PopulationFileReader implements Reader {
 	}
 	public static void main(String[] args) {
 		Reader test = new PopulationFileReader();
+		long start = System.currentTimeMillis();
 		List<ZipCode> result = test.read("population.txt");
-		for(ZipCode ele : result) {
-			System.out.println(ele);
-		}
-		System.out.println(result.size());
+		long end = System.currentTimeMillis();
+		long time = end-start;
+		System.out.println("Run Time: " + time);
+//		for(ZipCode ele : result) {
+//			System.out.println(ele);
+//		}
+//		System.out.println(result.size());
 	}
 
 }
