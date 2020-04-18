@@ -13,7 +13,7 @@ import java.io.*;
 public class Logger {
 
 	private static Logger logger = null;
-	// private static FileWriter fw;
+	private static Writer w = null;
 	private static File file = null;
 	private static String loggerFilename = "";
 	
@@ -28,10 +28,13 @@ public class Logger {
 	public static Logger getLoggerInstance() {
 		if(logger == null) {
 			logger = new Logger();
+			try {
+				w = new BufferedWriter(new FileWriter(file, true));
+			} catch (IOException e) { System.err.println("ERROR: Logger cannot write"); e.printStackTrace(); }
 		}
 		return logger;
 	}
-	
+		
 	/*
 	 * Sets logger filename
 	 * if the logger filename exists, it should append new data to it
@@ -75,15 +78,34 @@ public class Logger {
 	 *  When an input file is opened, write current time and name of file
 	 */
 	public void log(String string) {
+		
 		try {
-			Writer w = new BufferedWriter(new FileWriter(file, true));
-			w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
-			w.close();
+			this.w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
 		} catch (IOException e) {
 			System.err.println("ERROR: Logger cannot write");
+			e.printStackTrace(); 
+		}
+//		try {
+//			Writer w = new BufferedWriter(new FileWriter(file, true));
+//			w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
+//			w.close();
+//		} catch (IOException e) {
+//			System.err.println("ERROR: Logger cannot write");
+//			e.printStackTrace();
+//		}
+	}
+	
+	// WHEN TO CLOSE FW?
+	
+	public void close() {
+		try {
+			w.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
 		
 	public static void main(String[] args) {
 		
@@ -92,6 +114,8 @@ public class Logger {
 		
 		l.log("hi");
 		l.log(3);
+		l.log("hi");
+		l.close();
 	}
 	
 }
