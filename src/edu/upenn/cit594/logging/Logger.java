@@ -14,7 +14,6 @@ public class Logger {
 
 	private static Logger logger = null;
 	private static Writer w = null;
-	// private static File file = null;
 	private static String loggerFilename = "";
 	
 	private Logger() {
@@ -62,7 +61,6 @@ public class Logger {
 	
 	public void log(int choice) {
 		// should we do the valid choice checking here?
-		
 		String writeChoice = "";
 		if(choice < 7 && choice >= 0) {
 			writeChoice = "User Choice: " + Integer.toString(choice);
@@ -77,37 +75,22 @@ public class Logger {
 	 *  When an input file is opened, write current time and name of file
 	 */
 	public void log(String string) {
-		
 		try {
-			// open
 			this.w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
-			// close
 		} catch (IOException e) {
 			System.err.println("ERROR: Logger cannot write");
 			e.printStackTrace(); 
 		}
-//		try {
-//			Writer w = new BufferedWriter(new FileWriter(file, true));
-//			w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
-//			w.close();
-//		} catch (IOException e) {
-//			System.err.println("ERROR: Logger cannot write");
-//			e.printStackTrace();
-//		}
 	}
-	
-	// WHEN TO CLOSE FW?
-	
+		
 	public void close() {
 		try {
 			w.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-		
 	public static void main(String[] args) {
 		
 		Logger.setLogFile("log.txt");
