@@ -64,6 +64,9 @@ public class ZipCode {
 	}
 	
 	
-	
+	@Override
+	public String toString() {
+		return "ZipCode: " + this.code + "\t" + "Population: " + this.totalPopulation;
+	}
 	
 }

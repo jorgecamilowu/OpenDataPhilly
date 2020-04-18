@@ -78,15 +78,15 @@ public class CSVPropertiesReader implements Reader<Properties> {
 		List<String> result = new ArrayList<String>();
 		int start = 0;
 		boolean inQuotes = false;
-		for (int current = 0; current < input.length(); current++) {
-			if (input.charAt(current) == '\"') {
+		for (int i = 0; i < input.length(); i++) {
+			if (input.charAt(i) == '\"') {
 				inQuotes = !inQuotes; // toggle state
 			}
-			boolean atLastChar = (current == input.length() - 1);
+			boolean atLastChar = (i == input.length() - 1);
 			if(atLastChar) result.add(input.substring(start));
-			else if (input.charAt(current) == ',' && !inQuotes) {
-				result.add(input.substring(start, current));
-				start = current + 1;
+			else if (input.charAt(i) == ',' && !inQuotes) {
+				result.add(input.substring(start, i));
+				start = i + 1;
 			}
 		}
 		return result;
