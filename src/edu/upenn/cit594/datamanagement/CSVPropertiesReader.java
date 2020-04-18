@@ -36,35 +36,45 @@ public class CSVPropertiesReader implements Reader<Properties> {
 				in.close();
 				throw new IllegalStateException("Could not find categories of interest");
 			}
-			
 			//Proceed to read in data and create Properties Objects to populate our output list
 			while(in.hasNextLine()) {
 				String currentRow = in.nextLine();
+				String[] propertyInfo = currentRow.split(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 				
+				//if any of the fields of interest are missing, move on to next property.
+				if(propertyInfo[valuePos].equals("") || propertyInfo[areaPos].equals("") || propertyInfo[zipPos].equals("")) {
+					continue;
+				}
 				
-				
+				try {
+					double marketValue = Double.parseDouble(propertyInfo[valuePos]);
+					double totalArea = Double.parseDouble(propertyInfo[areaPos]);
+					//only want first 5 digits of zipcode
+					String temp = propertyInfo[zipPos].substring(0, 5);
+					int zipcode = Integer.parseInt(temp);
+					
+					Properties prop = new Properties(marketValue, totalArea, zipcode);
+					output.add(prop);
+				} catch (NumberFormatException e) {
+					continue;
+				}
 			}
-			
-			
 			in.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		return null;
+		return output;
 	}
 
 	
 	public static void main(String[] args) {
-//		Reader test = new CSVPropertiesReader();
-//		test.read("properties.csv");
-		
-		String row = "0,,91'S OF MONTROSE ST      ,3272501,O40  ,ROW 2.5 STY MASONRY,1,Single Family,540,N,,,43.85,0.0,0.0,4,0,15.0,,0,0,A,02,0,00,00910,4,910 S FAIRHILL ST,,,,PHILADELPHIA PA,\"1100 VINE ST, P315       \",19107,300800.0,,1,4,D,2,0,,MARK PETER               ,,021439700,E,,2017-10-02,006S160265     ,2017-09-29,259999.0,,,A,1001,33260,ST ,S,FAIRHILL,,218380.0,82420.0,F,657.75,1335.0,B,,,,I,1920,,191474016,RSA5 ,529795176,39.9366676137638,-75.1531737879182";
-		String[] result = row.split(",|\",|,\"");
-		for(String ele : result) {
-			System.out.println(ele);
-		}
+		Reader test = new CSVPropertiesReader();
+		long start = System.currentTimeMillis();
+		List<Properties> result = test.read("properties.csv");
+		long end = System.currentTimeMillis();
+		System.out.println(end-start);
+
 	}
 }
