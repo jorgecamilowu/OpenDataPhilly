@@ -35,4 +35,6 @@ public class ConsoleWriter {
 		return choice;
 	}
 	
+	// PRINT OUT VALUE FROM PROCESSOR
+	
 }

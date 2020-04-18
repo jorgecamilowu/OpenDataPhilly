@@ -66,6 +66,7 @@ public class Main {
 		// GET CONSOLE WRITER
 		ConsoleWriter cw = new ConsoleWriter();
 		cw.run();
+		// create separte method in main class
 		int userChoice;
 		while(true) {
 			userChoice = cw.getUserChoice();
@@ -75,9 +76,8 @@ public class Main {
 			if(userChoice == 0) {
 				System.out.println("Exiting. Goodbye!"); return;
 			}
-			
+			// pass into PROCESSOR
 		}
-		
 		// create Logger here
 		
 	}

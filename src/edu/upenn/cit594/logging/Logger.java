@@ -14,7 +14,7 @@ public class Logger {
 
 	private static Logger logger = null;
 	private static Writer w = null;
-	private static File file = null;
+	// private static File file = null;
 	private static String loggerFilename = "";
 	
 	private Logger() {
@@ -22,14 +22,14 @@ public class Logger {
 			System.out.println("Input filename for logger");
 			return;
 		}
-		file = new File(loggerFilename);
+		//file = new File(loggerFilename);
 	}
 	
 	public static Logger getLoggerInstance() {
 		if(logger == null) {
 			logger = new Logger();
 			try {
-				w = new BufferedWriter(new FileWriter(file, true));
+			  w = new BufferedWriter(new FileWriter(new File(loggerFilename), true));
 			} catch (IOException e) { System.err.println("ERROR: Logger cannot write"); e.printStackTrace(); }
 		}
 		return logger;
@@ -41,9 +41,8 @@ public class Logger {
 	 * if it doesn't exist, it should create the new file
 	 */
 	public static void setLogFile(String filename) {
-
+		if(!loggerFilename.equals("")) return;
 		loggerFilename = filename;
-		
 	}
 	
 	/*
@@ -80,7 +79,9 @@ public class Logger {
 	public void log(String string) {
 		
 		try {
+			// open
 			this.w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
+			// close
 		} catch (IOException e) {
 			System.err.println("ERROR: Logger cannot write");
 			e.printStackTrace(); 
