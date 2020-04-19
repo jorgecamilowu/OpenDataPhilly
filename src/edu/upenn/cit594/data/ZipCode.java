@@ -2,12 +2,12 @@ package edu.upenn.cit594.data;
 
 public class ZipCode {
 	private final int code;
-	private int totalPopulation;
-	private int totalNumberProperties;
-	private double totalPropertyValue;
-	private double totalPropertyLivableArea;
-	private int totalParkingTickets;
-	private double totalParkingTicketFines;
+	private int totalPopulation = 0;
+	private int totalNumberProperties = 0;
+	private double totalPropertyValue = 0;
+	private double totalPropertyLivableArea = 0;
+	private int totalParkingTickets = 0;
+	private double totalParkingTicketFines = 0;
 	
 	public ZipCode(int code) {
 		this.code = code;
@@ -24,6 +24,7 @@ public class ZipCode {
 	}
 
 	public int getTotalNumberProperties() {
+		
 		return totalNumberProperties;
 	}
 
