@@ -63,7 +63,11 @@ public class ZipCode {
 		this.totalParkingTicketFines = totalParkingTicketFines;
 	}
 	
-	
+	public int getCode() {
+		return code;
+	}
+
+
 	@Override
 	public String toString() {
 		return "ZipCode: " + this.code + "\t" + "Population: " + this.totalPopulation;
