@@ -54,10 +54,16 @@ public abstract class Processor2 {
 		for(Properties property : properties) {
 			if(validZip(property.getZipcode())) {
 				zipProperties.get(property.getZipcode()).add(property); // APPEND TO LINKED LIST
-				ZipCode curr = zipCodes.get(property.getZipcode());
-				curr.setTotalNumberProperties(curr.getTotalNumberProperties() + 1);
-				curr.setTotalPropertyLivableArea(curr.getTotalPropertyLivableArea() + property.getTotalLivableArea());
-				curr.setTotalPropertyValue(curr.getTotalPropertyValue() + property.getMarketValue());
+//				ZipCode curr = zipCodes.get(property.getZipcode());
+//				curr.setTotalNumberProperties(curr.getTotalNumberProperties() + 1);
+//				curr.setTotalPropertyLivableArea(curr.getTotalPropertyLivableArea() + property.getTotalLivableArea());
+//				curr.setTotalPropertyValue(curr.getTotalPropertyValue() + property.getMarketValue());
+				int currentTotalProperties = zipCodes.get(property.getZipcode()).getTotalNumberProperties();
+				double currentTotalPropertyLiveableArea = zipCodes.get(property.getZipcode()).getTotalPropertyLivableArea();
+				double currentTotalPropertyValue = zipCodes.get(property.getZipcode()).getTotalPropertyValue();
+				zipCodes.get(property.getZipcode()).setTotalNumberProperties(currentTotalProperties + 1);
+				zipCodes.get(property.getZipcode()).setTotalPropertyLivableArea(currentTotalPropertyLiveableArea + property.getTotalLivableArea());
+				zipCodes.get(property.getZipcode()).setTotalPropertyValue(currentTotalPropertyValue + property.getMarketValue());
 			}
 		}
 	}
