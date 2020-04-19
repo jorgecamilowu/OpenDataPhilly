@@ -51,26 +51,43 @@ public abstract class Processor2 {
 	// Place properties into correct key. Update zip instance variables in memo
 	public void placeProperties(String propertiesFile) {
 		List<Properties> properties = propertiesReader.read(propertiesFile);
-		for(Properties p : properties) {
-			if(validZip(p.getZipcode())) {
-				zipProperties.get(p.getZipcode()).add(p); // APPEND TO LINKED LIST
-				ZipCode curr = zipCodes.get(p.getZipcode());
+		for(Properties property : properties) {
+			if(validZip(property.getZipcode())) {
+				zipProperties.get(property.getZipcode()).add(property); // APPEND TO LINKED LIST
+				ZipCode curr = zipCodes.get(property.getZipcode());
 				curr.setTotalNumberProperties(curr.getTotalNumberProperties() + 1);
-				curr.setTotalPropertyLivableArea(curr.getTotalPropertyLivableArea() + p.getTotalLivableArea());
-				curr.setTotalPropertyValue(curr.getTotalPropertyValue() + p.getMarketValue());
+				curr.setTotalPropertyLivableArea(curr.getTotalPropertyLivableArea() + property.getTotalLivableArea());
+				curr.setTotalPropertyValue(curr.getTotalPropertyValue() + property.getMarketValue());
 			}
 		}
 	}
 	
 	// Place parkingfines into correct key. Update zip instance varibles in memo
 	public void placeParkingFines(String finesFile) {
-		List<ParkingFine> pFines = finesReader.read(finesFile);
-		for(ParkingFine p : pFines) {
-			if(validZip(p.getZipcode())) {
-				zipParkingFines.get(p.getZipcode()).add(p); // APPEND TO LINKED LIST
-				ZipCode curr = zipCodes.get(p.getZipcode());
-				curr.setTotalParkingTickets(curr.getTotalParkingTickets() + 1);
-				curr.setTotalParkingTicketFines(curr.getTotalParkingTicketFines() + p.getFine());
+		List<ParkingFine> parkingFines = finesReader.read(finesFile);
+		for(ParkingFine property : parkingFines) {
+			
+			int propertyCode = property.getZipcode();
+			if(validZip(propertyCode)) {
+				zipParkingFines.get(propertyCode).add(property); // APPEND TO LINKED LIST
+				
+				
+				/**
+				 * there might be a problem here. We are instantiating a new object and modifying
+				 * the new object. Maybe it is not updating the memoized one?
+				 * 
+				 * Not sure if we are handling with a pointer to the object or we are just modifying the 
+				 * newly instantiated ZipCode object curr
+				 */
+//				ZipCode curr = zipCodes.get(property.getZipcode());
+//				curr.setTotalParkingTickets(curr.getTotalParkingTickets() + 1);
+//				curr.setTotalParkingTicketFines(curr.getTotalParkingTicketFines() + property.getFine());
+				
+				int currentTotalParkingTickets = zipCodes.get(property.getZipcode()).getTotalParkingTickets(); //memoized running total tickets
+				double currentTotalFines = zipCodes.get(property.getZipcode()).getTotalParkingTicketFines(); //memoozed running total fine amount
+				double currentPropertyFine = property.getFine(); //current property's fine amount
+				zipCodes.get(property.getZipcode()).setTotalParkingTickets(currentTotalParkingTickets + 1); //update running total on memoized object
+				zipCodes.get(property.getZipcode()).setTotalParkingTicketFines(currentTotalFines + currentPropertyFine); //update running total fine amount on memoized object
 			}
 		}
 	}
@@ -83,9 +100,6 @@ public abstract class Processor2 {
 		return totalPopulation; // NEED TO MEMO THIS
 	}
 	
-	public boolean validZip(int zipCode) {
-		return zipProperties.containsKey(zipCode);
-	}
 	
 	// NUMBER 2
 	public Map<Integer, String> calculateTotalFinesPerCapita(int zipCode) {		
@@ -107,6 +121,10 @@ public abstract class Processor2 {
 		return (int) Math.floor(zipCodes.get(zipCode).getTotalPropertyValue() / zipCodes.get(zipCode).getTotalPopulation());
 	}
 	
+	///////////////private helper methods///////////////
+	private boolean validZip(int zipCode) {
+		return zipProperties.containsKey(zipCode);
+	}
 	
 	private static String truncateToString(double d) {
 		DecimalFormat df = new DecimalFormat("#.####");
