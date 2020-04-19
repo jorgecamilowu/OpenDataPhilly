@@ -35,6 +35,14 @@ public class ConsoleWriter {
 		return choice;
 	}
 	
+	public static void displayAns(double ans) {
+		System.out.println(ans);
+	}
+	
+	public static void displayAns(int ans) {
+		System.out.println(ans);
+	}
+		
 	// PRINT OUT VALUE FROM PROCESSOR
 	
 }
