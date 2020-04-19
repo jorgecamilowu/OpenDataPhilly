@@ -65,6 +65,14 @@ public abstract class Processor {
 			return this.finesPerCapita;
 		}
 		
+		//Retrieve population by zipcode. 
+		//Need to modify this so that if it wasn't initialized, 
+		//it will call helper method to retrieve it.
+		if(populationByZipcode == null) {
+			throw new IllegalStateException("population by zipcode information missing.");
+		}
+		
+		
 		//Retrieve list of parking fines
 		//Only read from data set if it wasn't pre-computed.
 		if(parkingFines == null) {
@@ -74,7 +82,16 @@ public abstract class Processor {
 		//Calculate running total fines per zipcode area
 		Map<Integer, Double> finesPerZip = new HashMap<>();
 		for(ParkingFine element : parkingFines) {
+			
 			int currentZip = element.getZipcode();
+			/*
+			 * if the zipcode corresponding to the parking fine is not found in our populations by zipcode
+			 * data set, then we cannot match total fines per capita to a population zipcode. So skip it.
+			 */
+			if(!populationByZipcode.containsKey(currentZip)) {
+				continue;
+			}
+			
 			double currentFineAmount = element.getFine();
 			
 			//if the zipCode was already in the map, update its running total fine amount.
@@ -89,15 +106,7 @@ public abstract class Processor {
 			}
 		}
 		
-		//Divide by population
-		
-		//Retrieve population by zipcode. 
-		//Need to modify this so that if it wasn't initialized, 
-		//it will call helper method to retrieve it.
-		if(populationByZipcode == null) {
-			throw new IllegalStateException("population by zipcode information missing.");
-		}
-		
+		////////////Divide by population////////////////
 		//Initialize finesPerCapita
 		finesPerCapita = new HashMap<>();
 		
@@ -106,6 +115,7 @@ public abstract class Processor {
 			//if the required zipcode population info is not present
 			//in populationByZipCode, 
 			if(populationByZipcode.get(element) == null) {
+				System.out.println(element);
 				continue;
 			}
 			int population = populationByZipcode.get(element);
@@ -122,11 +132,16 @@ public abstract class Processor {
 	public static void main(String[] args) {
 		Processor test = new CSVProcessor();
 		test.calculateTotalPopulation("population.txt");
-		test.getPopulationsByZip("population.txt");
+		Map<Integer, Integer> populations = test.getPopulationsByZip("population.txt");
+//		for(Integer key : populations.keySet()) {
+//			System.out.println(key + ": " + populations.get(key));
+//		}
+		
+		
 		Map<Integer, Double> result = test.calculateTotalFinesCapita("parking.csv");
-		for(Integer key : result.keySet()) {
-			System.out.println(key + "\t" + result.get(key));
-		}
+//		for(Integer key : result.keySet()) {
+//			System.out.println(key + "\t" + result.get(key));
+//		}
 	}
 	
 }
