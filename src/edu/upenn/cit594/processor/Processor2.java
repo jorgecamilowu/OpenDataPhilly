@@ -123,6 +123,14 @@ public abstract class Processor2 {
 		return ans;
 	}
 	
+	// NUMBER 3 && NUMBER 4
+	public double calculateRatio(Strategy strategy, ZipCode target) {
+		double Numerator = strategy.getNumerator(target);
+		double Denominator = strategy.getDenominator(target);
+		return Numerator/Denominator;
+	}
+	
+	
 	// NUMBER 5
 	public int calculateTotalResidentialMarketValuePerCapita(int zipCode) {
 		if(!validZip(zipCode)) return 0;
