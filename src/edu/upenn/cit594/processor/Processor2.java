@@ -4,6 +4,7 @@ import edu.upenn.cit594.datamanagement.CSVPropertiesReader;
 import edu.upenn.cit594.datamanagement.PopulationFileReader;
 import edu.upenn.cit594.datamanagement.Reader;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import edu.upenn.cit594.data.*;
 import edu.upenn.cit594.data.Properties;
@@ -51,7 +52,7 @@ public abstract class Processor2 {
 	public void placeProperties(String propertiesFile) {
 		List<Properties> properties = propertiesReader.read(propertiesFile);
 		for(Properties p : properties) {
-			if(zipProperties.containsKey(p.getZipcode())) {
+			if(validZip(p.getZipcode())) {
 				zipProperties.get(p.getZipcode()).add(p); // APPEND TO LINKED LIST
 				ZipCode curr = zipCodes.get(p.getZipcode());
 				curr.setTotalNumberProperties(curr.getTotalNumberProperties() + 1);
@@ -65,7 +66,7 @@ public abstract class Processor2 {
 	public void placeParkingFines(String finesFile) {
 		List<ParkingFine> pFines = finesReader.read(finesFile);
 		for(ParkingFine p : pFines) {
-			if(zipParkingFines.containsKey(p.getZipcode())) {
+			if(validZip(p.getZipcode())) {
 				zipParkingFines.get(p.getZipcode()).add(p); // APPEND TO LINKED LIST
 				ZipCode curr = zipCodes.get(p.getZipcode());
 				curr.setTotalParkingTickets(curr.getTotalParkingTickets() + 1);
@@ -86,15 +87,31 @@ public abstract class Processor2 {
 		return zipProperties.containsKey(zipCode);
 	}
 	
-//	public Map<Integer, Double> calculateTotalFinesPerCapita(int zipCode) {
-//		
-//		Map<Integer, Double> finesPerCapita = new HashMap<>();
-//		List<ParkingFine> parkingFines = finesReader.read(finesFilename);
-//		for(ZipCode z : ans.keySet()) {
-//			
-//		}
-//		// if(validZip(zipCode)) return 0;
-//	}
+	// NUMBER 2
+	public Map<Integer, String> calculateTotalFinesPerCapita(int zipCode) {		
+		// must be written in ascending numerical order, 4 digits after decimal point
+		if(!validZip(zipCode)) return null;
+		TreeMap<Integer, String> ans = new TreeMap<>();
+		for(int z : zipCodes.keySet()) {
+			double finesPerCapita = zipCodes.get(z).getTotalParkingTicketFines() / zipCodes.get(z).getTotalPopulation();
+			if(finesPerCapita > 0.00009) {
+				ans.put(z, truncateToString(finesPerCapita));
+			}
+		}
+		return ans;
+	}
+	
+	// NUMBER 5
+	public int calculateTotalResidentialMarketValuePerCapita(int zipCode) {
+		if(!validZip(zipCode)) return 0;
+		return (int) Math.floor(zipCodes.get(zipCode).getTotalPropertyValue() / zipCodes.get(zipCode).getTotalPopulation());
+	}
+	
+	
+	private static String truncateToString(double d) {
+		DecimalFormat df = new DecimalFormat("#.####");
+		return df.format(d);
+	}
 	
 	
 	
