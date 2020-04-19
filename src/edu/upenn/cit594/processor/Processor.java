@@ -158,9 +158,7 @@ public abstract class Processor {
 	public static void main(String[] args) {
 		Processor test = new JSONProcessor();
 		test.run("population.txt", "properties.csv", "parking.json");
-		int population = test.calculateTotalPopulation();
-		System.out.println("Population: " + population);
-		double result = test.calculateRatio(new ValueStrategy(), 19116);
+		double result = test.calculateRatio(new ValueStrategy(), 19154);
 		String result2 = truncateToString(result);
 		System.out.println(result2);
 	}
