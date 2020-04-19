@@ -65,11 +65,13 @@ public abstract class Processor2 {
 	// Place parkingfines into correct key. Update zip instance varibles in memo
 	public void placeParkingFines(String finesFile) {
 		List<ParkingFine> parkingFines = finesReader.read(finesFile);
-		for(ParkingFine property : parkingFines) {
+		for(ParkingFine parkingFine : parkingFines) {
 			
-			int propertyCode = property.getZipcode();
-			if(validZip(propertyCode)) {
-				zipParkingFines.get(propertyCode).add(property); // APPEND TO LINKED LIST
+			int propertyCode = parkingFine.getZipcode();
+			
+			//Check that zip is valid and license plate is PA
+			if(validZip(propertyCode) && (parkingFine.getStateLicensePlate().equals("PA"))) {
+				zipParkingFines.get(propertyCode).add(parkingFine); // APPEND TO LINKED LIST
 				
 				
 				/**
@@ -83,11 +85,11 @@ public abstract class Processor2 {
 //				curr.setTotalParkingTickets(curr.getTotalParkingTickets() + 1);
 //				curr.setTotalParkingTicketFines(curr.getTotalParkingTicketFines() + property.getFine());
 				
-				int currentTotalParkingTickets = zipCodes.get(property.getZipcode()).getTotalParkingTickets(); //memoized running total tickets
-				double currentTotalFines = zipCodes.get(property.getZipcode()).getTotalParkingTicketFines(); //memoozed running total fine amount
-				double currentPropertyFine = property.getFine(); //current property's fine amount
-				zipCodes.get(property.getZipcode()).setTotalParkingTickets(currentTotalParkingTickets + 1); //update running total on memoized object
-				zipCodes.get(property.getZipcode()).setTotalParkingTicketFines(currentTotalFines + currentPropertyFine); //update running total fine amount on memoized object
+				int currentTotalParkingTickets = zipCodes.get(parkingFine.getZipcode()).getTotalParkingTickets(); //memoized running total tickets
+				double currentTotalFines = zipCodes.get(parkingFine.getZipcode()).getTotalParkingTicketFines(); //memoozed running total fine amount
+				double currentPropertyFine = parkingFine.getFine(); //current property's fine amount
+				zipCodes.get(parkingFine.getZipcode()).setTotalParkingTickets(currentTotalParkingTickets + 1); //update running total on memoized object
+				zipCodes.get(parkingFine.getZipcode()).setTotalParkingTicketFines(currentTotalFines + currentPropertyFine); //update running total fine amount on memoized object
 			}
 		}
 	}
