@@ -1,6 +1,6 @@
 package edu.upenn.cit594.ui;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *  Interaction class between console and user
@@ -33,6 +33,12 @@ public class ConsoleWriter {
 		int choice = scanner.nextInt();
 		scanner.close();
 		return choice;
+	}
+	
+	public static void displayAns(Map<Integer, String> map) {
+		for(int key : map.keySet()) {
+			System.out.println(key + " " + map.get(key));
+		}
 	}
 	
 	public static void displayAns(double ans) {
