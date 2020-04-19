@@ -123,18 +123,18 @@ public abstract class Processor {
 		for(int z : zipCodes.keySet()) {
 			double finesPerCapita = zipCodes.get(z).getTotalParkingTicketFines() / zipCodes.get(z).getTotalPopulation();
 			if(finesPerCapita > 0.00009) {
-				ans.put(z, truncateToString(finesPerCapita));
+				ans.put(z, truncate(finesPerCapita));
 			}
 		}
 		return ans;
 	}
 	
 	// NUMBER 3 && NUMBER 4
-	public double calculateRatio(Strategy strategy, int zipcode) {
+	public int calculateRatio(Strategy strategy, int zipcode) {
 		ZipCode target = zipCodes.get(zipcode);
 		double Numerator = strategy.getNumerator(target);
 		double Denominator = strategy.getDenominator(target);
-		return Numerator/Denominator;
+		return truncateDiv(Numerator, Denominator);
 	}
 	
 	
@@ -149,17 +149,20 @@ public abstract class Processor {
 		return zipProperties.containsKey(zipCode);
 	}
 	
-	private static String truncateToString(double d) {
+	private static String truncate(double d) {
 		DecimalFormat df = new DecimalFormat("#.####");
 		return df.format(d);
 	}
 	
+	private static int truncateDiv(double d1, double d2) {
+		return (int) Math.floor(d1 / d2);
+	}
 	
 	public static void main(String[] args) {
 		Processor test = new JSONProcessor();
 		test.run("population.txt", "properties.csv", "parking.json");
 		double result = test.calculateRatio(new ValueStrategy(), 19154);
-		String result2 = truncateToString(result);
+		String result2 = truncate(result);
 		System.out.println(result2);
 	}
 	
