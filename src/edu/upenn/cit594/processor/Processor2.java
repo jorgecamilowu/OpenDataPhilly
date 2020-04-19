@@ -1,5 +1,6 @@
 package edu.upenn.cit594.processor;
 
+import edu.upenn.cit594.datamanagement.CSVPropertiesReader;
 import edu.upenn.cit594.datamanagement.PopulationFileReader;
 import edu.upenn.cit594.datamanagement.Reader;
 
@@ -19,7 +20,13 @@ public abstract class Processor2 {
 	
 	public Processor2() {
 		finesReader = createReader();
-		propertiesReader = createReader();
+		/**
+		 * createReader will return a CSV or JSON Parking Fines reader. For properties
+		 * reader we'll probably need to instantiate it separately. Or we create
+		 * another method that will instantiate it the same fashion as createReader()
+		 */
+//		propertiesReader = createReader();
+		propertiesReader = new CSVPropertiesReader();
 	}
 	
 	protected abstract Reader createReader();
