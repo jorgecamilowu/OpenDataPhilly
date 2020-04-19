@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.*;
 
 import edu.upenn.cit594.*;
+import edu.upenn.cit594.logging.Logger;
+import edu.upenn.cit594.processor.CSVProcessor;
 import edu.upenn.cit594.processor.JSONProcessor;
 import edu.upenn.cit594.processor.Processor;
 // not able to move into package edu.upenn.cit594
@@ -29,6 +31,13 @@ public class Main {
 	public static boolean checkValidFile(String filename) {
 		File file = new File(filename);
 		return file.canRead() || file.exists();
+	}
+	
+	private static Logger loggerSetUp(String logFilename) {
+		if(!logFilename.endsWith(".txt")) logFilename += ".txt";
+		Logger.setLogFile(logFilename);
+		Logger logger = Logger.getLoggerInstance();
+		return logger;
 	}
 
 	/*
@@ -57,13 +66,14 @@ public class Main {
 		// GET PROCESSOR
 		Processor p;
 		if(parkingFormat.toLowerCase().equals("csv") || parkingFormat.toLowerCase().equals(".csv")) {
-			p = new TextProcessor();
+			p = new CSVProcessor();
 		}
 		else if(parkingFormat.toLowerCase().equals("json") || parkingFormat.toLowerCase().equals(".json")) {
 			p = new JSONProcessor();
 		}
 		
 		// CREATE LOGGER HERE
+		loggerSetUp(logFilename);
 		
 		// GET CONSOLE WRITER
 		ConsoleWriter cw = new ConsoleWriter();
