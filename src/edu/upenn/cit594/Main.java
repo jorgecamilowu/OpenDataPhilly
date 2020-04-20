@@ -35,10 +35,25 @@ public class Main {
 	}
 	
 	private static Logger loggerSetUp(String logFilename) {
-		if(!logFilename.endsWith(".txt")) logFilename += ".txt";
+		logFilename = addTXT(logFilename);
 		Logger.setLogFile(logFilename);
 		Logger logger = Logger.getLoggerInstance();
 		return logger;
+	}
+	
+	private static String addCSV(String filename) {
+		if(!filename.endsWith(".csv") || !filename.endsWith(".CSV")) filename += ".csv";
+		return filename;
+	}
+	
+	private static String addJSON(String filename) {
+		if(!filename.endsWith(".json") || !filename.endsWith(".JSON")) filename += ".json";
+		return filename;
+	}
+	
+	private static String addTXT(String filename) {
+		if(!filename.endsWith(".txt") || !filename.endsWith(".TXT")) filename += ".";
+		return filename;
 	}
 
 	private static void runCore(ConsoleWriter cw, Logger logger, Processor p) {
@@ -51,16 +66,16 @@ public class Main {
 				if(userChoice < 0 || userChoice > 6) {
 					System.out.println("Invalid selection. Please choose between options 0-6"); 
 				}
-				if(userChoice == 0) {
+				else if (userChoice == 0) {
 					break;
 				}
-				if(userChoice == 1) {
+				else if (userChoice == 1) {
 					cw.displayAns(p.calculateTotalPopulation());
 				}
-				if(userChoice == 2) {
+				else if(userChoice == 2) {
 					cw.displayAns(p.calculateTotalFinesPerCapita());
 				}
-				if(userChoice == 3 || userChoice == 4) {
+				else if(userChoice == 3 || userChoice == 4) {
 					int zip = cw.getUserZipCode();
 					logger.log(zip);
 					if(!p.validZip(zip)) {
@@ -70,7 +85,7 @@ public class Main {
 					Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
 					cw.displayAns(p.calculateRatio(strategy, zip));
 				}
-				if(userChoice == 5) {
+				else if(userChoice == 5) {
 					int zip = cw.getUserZipCode();
 					logger.log(zip);
 					if(!p.validZip(zip)) {
@@ -103,11 +118,15 @@ public class Main {
 		String populationFilename = args[3];
 		String logFilename = args[4];
 		
+		addTXT(populationFilename);
+		addCSV(propertyFilename);
+		
 		// CREATE LOGGER HERE
 		Logger logger = loggerSetUp(logFilename);
 		logger.log(args);
 		
 		// CHECK VALID FILES / FORMATS
+		// IS THIS NECESSARY? SEE ABOVE ADDTXT AND ADDCSV
 		if(!checkFileformat(parkingFormat)) {
 			System.out.println("Invalid fileformat. Terminated"); return;
 		}
@@ -119,9 +138,11 @@ public class Main {
 		Processor p = null;
 		if(parkingFormat.toLowerCase().equals("csv") || parkingFormat.toLowerCase().equals(".csv")) {
 			p = new CSVProcessor();
+			parkingFormat = addCSV(parkingFormat);
 		}
 		else if(parkingFormat.toLowerCase().equals("json") || parkingFormat.toLowerCase().equals(".json")) {
 			p = new JSONProcessor();
+			parkingFormat = addJSON(parkingFormat);
 		}
 		System.out.println("Reading in data sets...");
 		p.run();
