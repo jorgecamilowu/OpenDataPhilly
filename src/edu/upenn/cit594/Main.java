@@ -97,16 +97,25 @@ public class Main {
 			if(userChoice == 2) {
 				int zip = cw.getUserZipCode();
 				logger.log(zip);
+				if(!p.validZip(zip)) {
+					cw.displayAns(0);
+				}
 				cw.displayAns(p.calculateTotalFinesPerCapita(zip));
 			}
 			if(userChoice == 3 || userChoice == 4) {
 				int zip = cw.getUserZipCode();
 				logger.log(zip);
+				if(!p.validZip(zip)) {
+					cw.displayAns(0);
+				}
 				cw.displayAns(p.calculateRatio(strategy, zip)); // FILL IN STRATEGY
 			}
 			if(userChoice == 5) {
 				int zip = cw.getUserZipCode();
 				logger.log(zip);
+				if(!p.validZip(zip)) {
+					cw.displayAns(0);
+				}
 				cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
 			}
 		}

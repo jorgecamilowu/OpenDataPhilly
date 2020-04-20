@@ -144,11 +144,11 @@ public abstract class Processor {
 		return (int) Math.floor(zipCodes.get(zipCode).getTotalPropertyValue() / zipCodes.get(zipCode).getTotalPopulation());
 	}
 	
-	///////////////private helper methods///////////////
-	private boolean validZip(int zipCode) {
+	public boolean validZip(int zipCode) {
 		return zipProperties.containsKey(zipCode);
 	}
 	
+	///////////////private helper methods///////////////
 	private static String truncate(double d) {
 		DecimalFormat df = new DecimalFormat("#.####");
 		return df.format(d);
