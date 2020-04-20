@@ -186,7 +186,7 @@ public abstract class Processor {
 	
 	///////////////private helper methods///////////////
 	private static String truncate(double d) {
-		DecimalFormat df = new DecimalFormat("#.####");
+		DecimalFormat df = new DecimalFormat("0.0000");
 		df.setRoundingMode(RoundingMode.FLOOR);
 		return df.format(d);
 	}
@@ -195,11 +195,5 @@ public abstract class Processor {
 		return (int) Math.floor(d1 / d2);
 	}
 	
-	public static void main(String[] args) {
-		
-		double x1 = 0.119999;
-		double x2 = 0.119999;
-		System.out.println(truncate(x1));
-	}
 	
 }
