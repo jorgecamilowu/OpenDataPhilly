@@ -1,0 +1,6 @@
+1587356034390 json parking.json properties.csv population.txt log.txt
+1587356034399 population.txt
+1587356034419 properties.csv
+1587356038586 parking.json
+1587356045174 ZipCode: 19154
+1587356046831 ZipCode: 19154

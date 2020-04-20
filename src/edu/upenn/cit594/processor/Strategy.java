@@ -5,4 +5,5 @@ import edu.upenn.cit594.data.ZipCode;
 public interface Strategy {
 	public double getNumerator(ZipCode target);
 	public double getDenominator(ZipCode target);
+	public String getStrategyType();
 }

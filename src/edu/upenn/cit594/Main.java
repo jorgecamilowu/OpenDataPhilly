@@ -3,13 +3,14 @@ package edu.upenn.cit594;
 import java.io.File;
 import java.util.*;
 
-import edu.upenn.cit594.*;
 import edu.upenn.cit594.logging.Logger;
+import edu.upenn.cit594.processor.AreaStrategy;
 import edu.upenn.cit594.processor.CSVProcessor;
 import edu.upenn.cit594.processor.JSONProcessor;
 import edu.upenn.cit594.processor.Processor;
+import edu.upenn.cit594.processor.Strategy;
+import edu.upenn.cit594.processor.ValueStrategy;
 // not able to move into package edu.upenn.cit594
-import edu.upenn.cit594.processor.TextProcessor;
 import edu.upenn.cit594.ui.ConsoleWriter;
 
 
@@ -45,7 +46,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
-		if(args.length != 5) {
+		if(args.length < 5) {
 			System.out.println("Incorrect number of args. Terminated"); return;
 		}
 		
@@ -63,7 +64,7 @@ public class Main {
 		if(!checkFileformat(parkingFormat)) {
 			System.out.println("Invalid fileformat. Terminated"); return;
 		}
-		if(!checkValidFile(parkingFilename) || checkValidFile(propertyFilename) || !checkValidFile(populationFilename)) {
+		if(!checkValidFile(parkingFilename) || !checkValidFile(propertyFilename) || !checkValidFile(populationFilename)) {
 			System.out.println("Files do not exist. Terminated"); return;
 		}
 		
@@ -75,52 +76,62 @@ public class Main {
 		else if(parkingFormat.toLowerCase().equals("json") || parkingFormat.toLowerCase().equals(".json")) {
 			p = new JSONProcessor();
 		}
+		System.out.println("Reading in data sets...");
+		p.run();
+		long timePopulation = p.makeZipKeys(populationFilename);
+		logger.log(timePopulation, populationFilename);
+		long timeProperty = p.placeProperties(propertyFilename);
+		logger.log(timeProperty, propertyFilename);
+		long timeParking = p.placeParkingFines(parkingFilename);
+		logger.log(timeParking, parkingFilename);
 		
 		// GET CONSOLE WRITER
-		ConsoleWriter cw = new ConsoleWriter();
+		ConsoleWriter cw = ConsoleWriter.getConsoleWriter();
 		cw.run();
-		
-		// NECESSARY TO REFACTOR?
 		
 		int userChoice;
 		while(true) {
-			userChoice = cw.getUserChoice();
-			if(userChoice < 0 || userChoice > 6) {
-				System.out.println("Invalid selection. Terminating"); 
-			}
-			if(userChoice == 0) {
-				break;
-			}
-			if(userChoice == 1) {
-				cw.displayAns(p.calculateTotalPopulation());
-			}
-			if(userChoice == 2) {
-				int zip = cw.getUserZipCode();
-				logger.log(zip);
-				if(!p.validZip(zip)) {
-					cw.displayAns(0);
+			try {
+				cw.displayPrompt();
+				userChoice = cw.getUserChoice();
+				if(userChoice < 0 || userChoice > 6) {
+					System.out.println("Invalid selection. Please choose between options 0-6"); 
 				}
-				cw.displayAns(p.calculateTotalFinesPerCapita(zip));
-			}
-			if(userChoice == 3 || userChoice == 4) {
-				int zip = cw.getUserZipCode();
-				logger.log(zip);
-				if(!p.validZip(zip)) {
-					cw.displayAns(0);
+				if(userChoice == 0) {
+					break;
 				}
-				cw.displayAns(p.calculateRatio(strategy, zip)); // FILL IN STRATEGY
-			}
-			if(userChoice == 5) {
-				int zip = cw.getUserZipCode();
-				logger.log(zip);
-				if(!p.validZip(zip)) {
-					cw.displayAns(0);
+				if(userChoice == 1) {
+					cw.displayAns(p.calculateTotalPopulation());
 				}
-				cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
+				if(userChoice == 2) {
+					cw.displayAns(p.calculateTotalFinesPerCapita());
+				}
+				if(userChoice == 3 || userChoice == 4) {
+					int zip = cw.getUserZipCode();
+					logger.log(zip);
+					if(!p.validZip(zip)) {
+						cw.displayAns(0);
+					}
+					//ValueStrategy if option 3, AreaStrategy for option 4
+					Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
+					cw.displayAns(p.calculateRatio(strategy, zip)); // FILL IN STRATEGY
+				}
+				if(userChoice == 5) {
+					int zip = cw.getUserZipCode();
+					logger.log(zip);
+					if(!p.validZip(zip)) {
+						cw.displayAns(0);
+					}
+					cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.");
+				cw.resolveBadInput();
+				continue;
 			}
 		}
+		cw.stop();
 		logger.close();
-		System.out.println("Exiting. Goodbye!");  // PUT INTO CONSOLE WRITER?
 	}
 	
 }

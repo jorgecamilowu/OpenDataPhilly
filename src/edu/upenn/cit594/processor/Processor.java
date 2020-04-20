@@ -18,52 +18,62 @@ public abstract class Processor {
 	protected Map<Integer, LinkedList<Properties>> zipProperties;
 	protected Map<Integer, LinkedList<ParkingFine>> zipParkingFines;
 	
+	///////////////Memoized Data///////////////
+	protected int totalPopulation = 0;
+	protected Map<Integer, String> finesPerCapita;
+	protected Map<Integer, Integer> totalMarketvalue;
+	protected Map<Integer, Integer> avgResidenceValue;
+	protected Map<Integer, Integer> avgResidenceArea;
+	
 	
 	public Processor() {
 		finesReader = createReader();
-		/**
-		 * createReader will return a CSV or JSON Parking Fines reader. For properties
-		 * reader we'll probably need to instantiate it separately. Or we create
-		 * another method that will instantiate it the same fashion as createReader()
-		 */
-//		propertiesReader = createReader();
 		propertiesReader = new CSVPropertiesReader();
 	}
 	
 	protected abstract Reader createReader();
 	
-	public void run(String populationFilename, String propertiesFilename, String finesFilename) {
+	/**
+	 * Decided to not call makezipKeys, placeProperties, and placeParkingFines 
+	 * for the purpose of logging read in time.
+	 * Instad, each of the methods will need to be called separately and the methods
+	 * will return the timestamp of when they were called. Lemme know what you think of this.
+	 * 
+	 */
+	public void run() {
 		zipProperties = new HashMap<>();
 		zipParkingFines = new HashMap<>();
 		zipCodes = new HashMap<>();
-		makeZipKeys(populationFilename);
-		placeProperties(propertiesFilename);
-		placeParkingFines(finesFilename);
+		totalMarketvalue = new HashMap<>();
+		avgResidenceValue = new HashMap<>();
+		avgResidenceArea = new HashMap<>();
+//		makeZipKeys(populationFilename);
+//		placeProperties(propertiesFilename);
+//		placeParkingFines(finesFilename);
 		// DO WHATEVER ELSE
 	}
 	
 	// Make the memo tables with key as valid zips
-	public void makeZipKeys(String populationFilename) {
+	public long makeZipKeys(String populationFilename) {
+		long time = System.currentTimeMillis();
 		List<ZipCode> populations = populationReader.read(populationFilename);
 		for(ZipCode zip : populations) {
 			zipCodes.put(zip.getCode(), zip);
 			zipProperties.put(zip.getCode(), new LinkedList<>());
 			zipParkingFines.put(zip.getCode(), new LinkedList<>());
 		}
+		return time;
 	}
 	
 	// Place properties into correct key. Update zip instance variables in memo
-	public void placeProperties(String propertiesFile) {
+	public long placeProperties(String propertiesFile) {
+		long time = System.currentTimeMillis();
 		List<Properties> properties = propertiesReader.read(propertiesFile);
 		
 		for(Properties property : properties) {
 			int propertyCode = property.getZipcode();
 			if(validZip(propertyCode)) {
 				zipProperties.get(propertyCode).add(property); // APPEND TO LINKED LIST
-//				ZipCode curr = zipCodes.get(property.getZipcode());
-//				curr.setTotalNumberProperties(curr.getTotalNumberProperties() + 1);
-//				curr.setTotalPropertyLivableArea(curr.getTotalPropertyLivableArea() + property.getTotalLivableArea());
-//				curr.setTotalPropertyValue(curr.getTotalPropertyValue() + property.getMarketValue());
 				
 				int currentTotalProperties = zipCodes.get(propertyCode).getTotalNumberProperties();
 				double currentTotalPropertyLiveableArea = zipCodes.get(propertyCode).getTotalPropertyLivableArea();
@@ -73,10 +83,12 @@ public abstract class Processor {
 				zipCodes.get(propertyCode).setTotalPropertyValue(currentTotalPropertyValue + property.getMarketValue());
 			}
 		}
+		return time;
 	}
 	
 	// Place parkingfines into correct key. Update zip instance varibles in memo
-	public void placeParkingFines(String finesFile) {
+	public long placeParkingFines(String finesFile) {
+		long time = System.currentTimeMillis();
 		List<ParkingFine> parkingFines = finesReader.read(finesFile);
 		for(ParkingFine parkingFine : parkingFines) {
 			
@@ -85,18 +97,7 @@ public abstract class Processor {
 			//Check that zip is valid and license plate is PA
 			if(validZip(propertyCode) && (parkingFine.getStateLicensePlate().equals("PA"))) {
 				zipParkingFines.get(propertyCode).add(parkingFine); // APPEND TO LINKED LIST
-				
-				/**
-				 * there might be a problem here. We are instantiating a new object and modifying
-				 * the new object. Maybe it is not updating the memoized one?
-				 * 
-				 * Not sure if we are handling with a pointer to the object or we are just modifying the 
-				 * newly instantiated ZipCode object curr
-				 */
-//				ZipCode curr = zipCodes.get(property.getZipcode());
-//				curr.setTotalParkingTickets(curr.getTotalParkingTickets() + 1);
-//				curr.setTotalParkingTicketFines(curr.getTotalParkingTicketFines() + property.getFine());
-				
+
 				int currentTotalParkingTickets = zipCodes.get(propertyCode).getTotalParkingTickets(); //memoized running total tickets
 				double currentTotalFines = zipCodes.get(propertyCode).getTotalParkingTicketFines(); //memoozed running total fine amount
 				double currentPropertyFine = parkingFine.getFine(); //current property's fine amount
@@ -104,44 +105,89 @@ public abstract class Processor {
 				zipCodes.get(propertyCode).setTotalParkingTicketFines(currentTotalFines + currentPropertyFine); //update running total fine amount on memoized object
 			}
 		}
+		return time;
 	}
 	
 	public int calculateTotalPopulation() {
-		int totalPopulation = 0;
-		for(int i : zipCodes.keySet()) {
-			totalPopulation += zipCodes.get(i).getTotalPopulation();
+		//check if value for zipcode was pre-computed.
+		if(totalPopulation != 0) {
+			System.out.println("taking from memoized data"); //for testing purposes
+			return totalPopulation;
 		}
-		return totalPopulation; // NEED TO MEMO THIS
+		
+		int output = 0;
+		for(int i : zipCodes.keySet()) {
+			output += zipCodes.get(i).getTotalPopulation();
+		}
+		
+		totalPopulation = output; //memoize
+		return output;
 	}
 	
 	
 	// NUMBER 2
-	public Map<Integer, String> calculateTotalFinesPerCapita(int zipCode) {		
+	public Map<Integer, String> calculateTotalFinesPerCapita() {		
+		//check if value for zipcode was pre-computed.
+		if(finesPerCapita != null) {
+			System.out.println("taking from memoized data"); //for testing purposes
+			return finesPerCapita;
+		}
+		
 		// must be written in ascending numerical order, 4 digits after decimal point
-		if(!validZip(zipCode)) return null;
-		TreeMap<Integer, String> ans = new TreeMap<>();
+		Map<Integer, String> output = new TreeMap<>();
 		for(int z : zipCodes.keySet()) {
 			double finesPerCapita = zipCodes.get(z).getTotalParkingTicketFines() / zipCodes.get(z).getTotalPopulation();
 			if(finesPerCapita > 0.00009) {
-				ans.put(z, truncate(finesPerCapita));
+				output.put(z, truncate(finesPerCapita));
 			}
 		}
-		return ans;
+		finesPerCapita = output; //memoize
+		return output;
 	}
 	
 	// NUMBER 3 && NUMBER 4
 	public int calculateRatio(Strategy strategy, int zipcode) {
+		//check if value for zipcode was pre-computed.
+		if(avgResidenceArea.containsKey(zipcode) && strategy.getStrategyType().equals("area")) {
+			System.out.println("taking from memoized data"); //for testing purposes
+			return avgResidenceArea.get(zipcode);
+		} else if(avgResidenceValue.containsKey(zipcode) && strategy.getStrategyType().equals("value")) {
+			System.out.println("taking from memoized data"); //for testing purposes
+			return avgResidenceValue.get(zipcode);
+		}
+		if(!validZip(zipcode)) {
+			return 0;
+		}
+		
 		ZipCode target = zipCodes.get(zipcode);
 		double Numerator = strategy.getNumerator(target);
 		double Denominator = strategy.getDenominator(target);
-		return truncateDiv(Numerator, Denominator);
+		int output = truncateDiv(Numerator, Denominator);
+		
+		//memoize
+		if(strategy.getStrategyType().equals("area" )) {
+			avgResidenceArea.put(zipcode, output);
+		} else {
+			avgResidenceValue.put(zipcode, output);
+		}
+		return output;
 	}
 	
 	
 	// NUMBER 5
 	public int calculateTotalResidentialMarketValuePerCapita(int zipCode) {
-		if(!validZip(zipCode)) return 0;
-		return (int) Math.floor(zipCodes.get(zipCode).getTotalPropertyValue() / zipCodes.get(zipCode).getTotalPopulation());
+		//check if value for zipcode was pre-computed.
+		if(totalMarketvalue.containsKey(zipCode)) {
+			System.out.println("taking from memoized data"); //for testing purposes
+			return totalMarketvalue.get(zipCode);
+		}
+		if(!validZip(zipCode)) {
+			return 0;
+		}
+		int output = (int) Math.floor(zipCodes.get(zipCode).getTotalPropertyValue() / zipCodes.get(zipCode).getTotalPopulation());
+		totalMarketvalue.put(zipCode, output);//memoize
+		
+		return output;
 	}
 	
 	public boolean validZip(int zipCode) {
@@ -156,14 +202,6 @@ public abstract class Processor {
 	
 	private static int truncateDiv(double d1, double d2) {
 		return (int) Math.floor(d1 / d2);
-	}
-	
-	public static void main(String[] args) {
-		Processor test = new JSONProcessor();
-		test.run("population.txt", "properties.csv", "parking.json");
-		double result = test.calculateRatio(new ValueStrategy(), 19154);
-		String result2 = truncate(result);
-		System.out.println(result2);
 	}
 	
 }

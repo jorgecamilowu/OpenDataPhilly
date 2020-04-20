@@ -14,4 +14,9 @@ public class ValueStrategy implements Strategy {
 		return target.getTotalNumberProperties();
 	}
 
+	@Override
+	public String getStrategyType() {
+		return "value";
+	}
+
 }

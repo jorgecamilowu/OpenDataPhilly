@@ -14,4 +14,9 @@ public class AreaStrategy implements Strategy {
 		return target.getTotalNumberProperties();
 	}
 
+	@Override
+	public String getStrategyType() {
+		return "area";
+	}
+
 }

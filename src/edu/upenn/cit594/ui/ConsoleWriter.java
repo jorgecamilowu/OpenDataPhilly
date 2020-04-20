@@ -9,51 +9,72 @@ import java.util.*;
  */
 public class ConsoleWriter {
 	
-	static ConsoleWriter consoleWriter = null;
-	
-	public static void run() {
-		consoleWriter = new ConsoleWriter();
-		System.out.println("Welcome to OpenDataPhilly!\nPlease type your selection:");
-		displayPrompt();		
+	private static Scanner scanner;
+
+	private ConsoleWriter() {
+		scanner = new Scanner(System.in);
 	}
 	
-	public static void displayPrompt() {
-		System.out.println("0: Exit");
-		System.out.println("1: Show total population for all zip-codes");
-		System.out.println("2: Show total parking fines per capita per zip-code");
-		System.out.println("3: Show average property market value for residences in a specific zip-code");
-		System.out.println("4: Show average total livable area for residences in a specific zip-code");
-		System.out.println("5: Show total residential market value per capita in a specific zip-code");
-		System.out.println("6: Show custom feature");
+	private static ConsoleWriter cw = new ConsoleWriter();
+	
+	
+	public synchronized static ConsoleWriter getConsoleWriter() {
+		return cw;
 	}
 	
-	public static int getUserChoice() {
-		System.out.println("Please select a choice.");
-		Scanner scanner = new Scanner(System.in);
-		int choice = scanner.nextInt();
+	public void run() {
+		System.out.println("Welcome to OpenDataPhilly!\nPlease type in the number of your selection:");
+//		displayPrompt();		
+	}
+	
+	public void stop() {
 		scanner.close();
+		System.out.println("Goodbye!");
+	}
+	
+	public void displayPrompt() {
+		System.out.println(
+				"0: Exit" + "\n" +
+				"1: Show total population for all zip-codes" + "\n" +
+				"2: Show total parking fines per capita per zip-code" + "\n" +
+				"3: Show average property market value for residences in a specific zip-code" + "\n" +
+				"4: Show average total livable area for residences in a specific zip-code" + "\n" +
+				"5: Show total residential market value per capita in a specific zip-code" + "\n" +
+				"6: Show custom feature \n");
+	}
+	
+	public void resolveBadInput() {
+		scanner.next();
+		return;
+	}
+	
+	public int getUserChoice() {
+		System.out.println("Select a task to perform.");
+//		Scanner scanner = new Scanner(System.in);
+		int choice = scanner.nextInt();
+//		scanner.close();
 		return choice;
 	}
 	
-	public static int getUserZipCode() {
+	public int getUserZipCode() {
 		System.out.println("Please enter a zip-code.");
-		Scanner scanner = new Scanner(System.in);
+//		Scanner scanner = new Scanner(System.in);
 		int zipCode = scanner.nextInt();
-		scanner.close();
+//		scanner.close();
 		return zipCode;
 	}
 	
-	public static void displayAns(Map<Integer, String> map) {
+	public void displayAns(Map<Integer, String> map) {
 		for(int key : map.keySet()) {
 			System.out.println(key + " " + map.get(key));
 		}
 	}
 	
-	public static void displayAns(double ans) {
+	public void displayAns(double ans) {
 		System.out.println(ans);
 	}
 	
-	public static void displayAns(int ans) {
+	public void displayAns(int ans) {
 		System.out.println(ans);
 	}
 		

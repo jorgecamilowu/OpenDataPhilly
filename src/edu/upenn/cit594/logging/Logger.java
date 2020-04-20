@@ -74,15 +74,24 @@ public class Logger {
 	/*
 	 *  When an input file is opened, write current time and name of file
 	 */
+	
+	public void log(long time, String string) {
+		try {
+			w.append(time + " " + string + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void log(String string) {
 		try {
-			this.w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
+			w.append(Long.toString(System.currentTimeMillis()) + " " + string + "\n");
 		} catch (IOException e) {
 			System.err.println("ERROR: Logger cannot write");
 			e.printStackTrace(); 
 		}
 	}
-		
+	
 	public void close() {
 		try {
 			w.close();
