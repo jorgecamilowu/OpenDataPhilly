@@ -4,6 +4,7 @@ import edu.upenn.cit594.datamanagement.CSVPropertiesReader;
 import edu.upenn.cit594.datamanagement.PopulationFileReader;
 import edu.upenn.cit594.datamanagement.Reader;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 import edu.upenn.cit594.data.*;
@@ -186,7 +187,6 @@ public abstract class Processor {
 		}
 		int output = (int) Math.floor(zipCodes.get(zipCode).getTotalPropertyValue() / zipCodes.get(zipCode).getTotalPopulation());
 		totalMarketvalue.put(zipCode, output);//memoize
-		
 		return output;
 	}
 	
@@ -197,11 +197,20 @@ public abstract class Processor {
 	///////////////private helper methods///////////////
 	private static String truncate(double d) {
 		DecimalFormat df = new DecimalFormat("#.####");
+		df.setRoundingMode(RoundingMode.FLOOR);
 		return df.format(d);
 	}
 	
 	private static int truncateDiv(double d1, double d2) {
 		return (int) Math.floor(d1 / d2);
+	}
+	
+	public static void main(String[] args) {
+		
+		double x1 = 0.119999;
+		double x2 = 0.119999;
+		
+		System.out.println(truncate(x1));
 	}
 	
 }
