@@ -41,6 +41,53 @@ public class Main {
 		return logger;
 	}
 
+	private static void runCore(ConsoleWriter cw, Logger logger, Processor p) {
+		cw.run();		
+		int userChoice;
+		while(true) {
+			try {
+				cw.displayPrompt();
+				userChoice = cw.getUserChoice();
+				if(userChoice < 0 || userChoice > 6) {
+					System.out.println("Invalid selection. Please choose between options 0-6"); 
+				}
+				if(userChoice == 0) {
+					break;
+				}
+				if(userChoice == 1) {
+					cw.displayAns(p.calculateTotalPopulation());
+				}
+				if(userChoice == 2) {
+					cw.displayAns(p.calculateTotalFinesPerCapita());
+				}
+				if(userChoice == 3 || userChoice == 4) {
+					int zip = cw.getUserZipCode();
+					logger.log(zip);
+					if(!p.validZip(zip)) {
+						cw.displayAns(0);
+					}
+					//ValueStrategy if option 3, AreaStrategy for option 4
+					Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
+					cw.displayAns(p.calculateRatio(strategy, zip));
+				}
+				if(userChoice == 5) {
+					int zip = cw.getUserZipCode();
+					logger.log(zip);
+					if(!p.validZip(zip)) {
+						cw.displayAns(0);
+					}
+					cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.");
+				cw.resolveBadInput();
+				continue;
+			}
+		}
+		cw.stop();
+		logger.close();
+	}
+	
 	/*
 	 * Runtime args: [parkingFormat, parkingFilename, propertyFilename, populationFilename, logFilename]
 	 */
@@ -87,51 +134,9 @@ public class Main {
 		
 		// GET CONSOLE WRITER
 		ConsoleWriter cw = ConsoleWriter.getConsoleWriter();
-		cw.run();
 		
-		int userChoice;
-		while(true) {
-			try {
-				cw.displayPrompt();
-				userChoice = cw.getUserChoice();
-				if(userChoice < 0 || userChoice > 6) {
-					System.out.println("Invalid selection. Please choose between options 0-6"); 
-				}
-				if(userChoice == 0) {
-					break;
-				}
-				if(userChoice == 1) {
-					cw.displayAns(p.calculateTotalPopulation());
-				}
-				if(userChoice == 2) {
-					cw.displayAns(p.calculateTotalFinesPerCapita());
-				}
-				if(userChoice == 3 || userChoice == 4) {
-					int zip = cw.getUserZipCode();
-					logger.log(zip);
-					if(!p.validZip(zip)) {
-						cw.displayAns(0);
-					}
-					//ValueStrategy if option 3, AreaStrategy for option 4
-					Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
-					cw.displayAns(p.calculateRatio(strategy, zip)); // FILL IN STRATEGY
-				}
-				if(userChoice == 5) {
-					int zip = cw.getUserZipCode();
-					logger.log(zip);
-					if(!p.validZip(zip)) {
-						cw.displayAns(0);
-					}
-					cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
-				}
-			} catch (InputMismatchException e) {
-				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.");
-				cw.resolveBadInput();
-				continue;
-			}
-		}
-		cw.stop();
-		logger.close();
+		// RUN CORE
+		runCore(cw, logger, p);
 	}
 	
 }

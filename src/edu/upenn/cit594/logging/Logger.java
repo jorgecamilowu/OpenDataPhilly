@@ -72,7 +72,8 @@ public class Logger {
 	}
 	
 	/*
-	 *  When an input file is opened, write current time and name of file
+	 *  When an input file is opened, write current time and name of file. We cannot reuse the overload log(String string) as
+	 *  to preserve the accurate time of file reading.
 	 */
 	
 	public void log(long time, String string) {

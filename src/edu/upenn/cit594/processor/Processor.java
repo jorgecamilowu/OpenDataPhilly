@@ -34,13 +34,6 @@ public abstract class Processor {
 	
 	protected abstract Reader createReader();
 	
-	/**
-	 * Decided to not call makezipKeys, placeProperties, and placeParkingFines 
-	 * for the purpose of logging read in time.
-	 * Instad, each of the methods will need to be called separately and the methods
-	 * will return the timestamp of when they were called. Lemme know what you think of this.
-	 * 
-	 */
 	public void run() {
 		zipProperties = new HashMap<>();
 		zipParkingFines = new HashMap<>();
@@ -48,9 +41,6 @@ public abstract class Processor {
 		totalMarketvalue = new HashMap<>();
 		avgResidenceValue = new HashMap<>();
 		avgResidenceArea = new HashMap<>();
-//		makeZipKeys(populationFilename);
-//		placeProperties(propertiesFilename);
-//		placeParkingFines(finesFilename);
 		// DO WHATEVER ELSE
 	}
 	
@@ -209,7 +199,6 @@ public abstract class Processor {
 		
 		double x1 = 0.119999;
 		double x2 = 0.119999;
-		
 		System.out.println(truncate(x1));
 	}
 	
