@@ -60,13 +60,12 @@ public class Logger {
 	}
 	
 	public void log(int choice) {
-		// should we do the valid choice checking here?
 		String writeChoice = "";
 		if(choice < 7 && choice >= 0) {
 			writeChoice = "User Choice: " + Integer.toString(choice);
 		}
 		else if (choice > 1000) { // check valid zip
-			writeChoice = "ZipCode: " + Integer.toString(choice);
+			writeChoice = "ZipCode: Chosen" + Integer.toString(choice);
 		}
 		log(writeChoice);		
 	}

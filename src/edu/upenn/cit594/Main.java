@@ -63,6 +63,7 @@ public class Main {
 			try {
 				cw.displayPrompt();
 				userChoice = cw.getUserChoice();
+				logger.log(userChoice);
 				if(userChoice < 0 || userChoice > 6) {
 					System.out.println("Invalid selection. Please choose between options 0-6"); 
 				}
@@ -82,8 +83,10 @@ public class Main {
 						cw.displayAns(0);
 					}
 					//ValueStrategy if option 3, AreaStrategy for option 4
-					Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
-					cw.displayAns(p.calculateRatio(strategy, zip));
+					else{
+						Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
+						cw.displayAns(p.calculateRatio(strategy, zip));
+					}
 				}
 				else if(userChoice == 5) {
 					int zip = cw.getUserZipCode();
@@ -91,7 +94,9 @@ public class Main {
 					if(!p.validZip(zip)) {
 						cw.displayAns(0);
 					}
-					cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
+					else {
+						cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
+					}				
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.");

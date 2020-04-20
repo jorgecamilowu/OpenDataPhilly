@@ -23,7 +23,7 @@ public class ConsoleWriter {
 	}
 	
 	public void run() {
-		System.out.println("Welcome to OpenDataPhilly!\nPlease type in the number of your selection:");
+		System.out.println("Welcome to OpenDataPhilly!\n\nPlease type in the number of your selection:");
 //		displayPrompt();		
 	}
 	
@@ -60,6 +60,7 @@ public class ConsoleWriter {
 		System.out.println("Please enter a zip-code.");
 //		Scanner scanner = new Scanner(System.in);
 		int zipCode = scanner.nextInt();
+		displayZipChosen(zipCode);
 //		scanner.close();
 		return zipCode;
 	}
@@ -68,6 +69,7 @@ public class ConsoleWriter {
 		for(int key : map.keySet()) {
 			System.out.println(key + " " + map.get(key));
 		}
+		System.out.println("");
 	}
 	
 	public void displayAns(double ans) {
@@ -76,6 +78,10 @@ public class ConsoleWriter {
 	
 	public void displayAns(int ans) {
 		System.out.println(ans);
+	}
+	
+	public void displayZipChosen(int zip) {
+		System.out.println("Zip-Code chosen: " + zip);
 	}
 		
 	// PRINT OUT VALUE FROM PROCESSOR
