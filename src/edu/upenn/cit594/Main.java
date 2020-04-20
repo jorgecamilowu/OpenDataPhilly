@@ -55,6 +55,10 @@ public class Main {
 		String populationFilename = args[3];
 		String logFilename = args[4];
 		
+		// CREATE LOGGER HERE
+		Logger logger = loggerSetUp(logFilename);
+		logger.log(args);
+		
 		// CHECK VALID FILES / FORMATS
 		if(!checkFileformat(parkingFormat)) {
 			System.out.println("Invalid fileformat. Terminated"); return;
@@ -64,7 +68,7 @@ public class Main {
 		}
 		
 		// GET PROCESSOR
-		Processor p;
+		Processor p = null;
 		if(parkingFormat.toLowerCase().equals("csv") || parkingFormat.toLowerCase().equals(".csv")) {
 			p = new CSVProcessor();
 		}
@@ -72,15 +76,13 @@ public class Main {
 			p = new JSONProcessor();
 		}
 		
-		// CREATE LOGGER HERE
-		loggerSetUp(logFilename);
-		
 		// GET CONSOLE WRITER
 		ConsoleWriter cw = new ConsoleWriter();
 		cw.run();
-		// create separte method in main class
-		int userChoice;
 		
+		// NECESSARY TO REFACTOR?
+		
+		int userChoice;
 		while(true) {
 			userChoice = cw.getUserChoice();
 			if(userChoice < 0 || userChoice > 6) {
@@ -89,10 +91,27 @@ public class Main {
 			if(userChoice == 0) {
 				break;
 			}
-			// else pass into PROCESSOR
+			if(userChoice == 1) {
+				cw.displayAns(p.calculateTotalPopulation());
+			}
+			if(userChoice == 2) {
+				int zip = cw.getUserZipCode();
+				logger.log(zip);
+				cw.displayAns(p.calculateTotalFinesPerCapita(zip));
+			}
+			if(userChoice == 3 || userChoice == 4) {
+				int zip = cw.getUserZipCode();
+				logger.log(zip);
+				cw.displayAns(p.calculateRatio(strategy, zip)); // FILL IN STRATEGY
+			}
+			if(userChoice == 5) {
+				int zip = cw.getUserZipCode();
+				logger.log(zip);
+				cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
+			}
 		}
-		// CLOSE LOGGER HERE
-		System.out.println("Exiting. Goodbye!"); 
+		logger.close();
+		System.out.println("Exiting. Goodbye!");  // PUT INTO CONSOLE WRITER?
 	}
 	
 }

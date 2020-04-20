@@ -35,6 +35,14 @@ public class ConsoleWriter {
 		return choice;
 	}
 	
+	public static int getUserZipCode() {
+		System.out.println("Please enter a zip-code.");
+		Scanner scanner = new Scanner(System.in);
+		int zipCode = scanner.nextInt();
+		scanner.close();
+		return zipCode;
+	}
+	
 	public static void displayAns(Map<Integer, String> map) {
 		for(int key : map.keySet()) {
 			System.out.println(key + " " + map.get(key));
