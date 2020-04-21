@@ -28,3 +28,11 @@
 1587488842363 User Choice: 5
 1587488843842 ZipCode: 19128
 1587488865236 User Choice: 0
+1587497453030 csv parking.csv properties.csv population.txt log.txt
+1587497453032 population.txt
+1587497453053 properties.csv
+1587497457441 parking.csv
+1587497458970 User Choice: 6
+1587497474148 User Choice: 4
+1587497476274 ZipCode: 19115
+1587497477603 User Choice: 0

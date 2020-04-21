@@ -71,11 +71,7 @@ public class ConsoleWriter {
 	public void displayAns(String ans) {
 		System.out.println(ans);
 	}
-	
-//	public void displayAns(double ans) {
-//		System.out.println(ans);
-//	}
-	
+
 	public void displayAns(int ans) {
 		System.out.println(ans);
 	}
