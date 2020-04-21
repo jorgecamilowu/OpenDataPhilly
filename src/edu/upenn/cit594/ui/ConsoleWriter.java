@@ -72,13 +72,17 @@ public class ConsoleWriter {
 		System.out.println("");
 	}
 	
+	public void displayAns(String ans) {
+		System.out.println(ans);
+	}
+	
 	public void displayAns(double ans) {
 		System.out.println(ans);
 	}
 	
-	public void displayAns(int ans) {
-		System.out.println(ans);
-	}
+//	public void displayAns(int ans) {
+//		System.out.println(ans);
+//	}
 	
 	public void displayZipChosen(int zip) {
 		System.out.println("Zip-Code chosen: " + zip);

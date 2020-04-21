@@ -25,7 +25,7 @@ public abstract class Processor {
 	protected Map<Integer, Integer> totalMarketvalue;
 	protected Map<Integer, Integer> avgResidenceValue;
 	protected Map<Integer, Integer> avgResidenceArea;
-	
+	protected Map<String, Double[]> avgFineByCategory;
 	
 	public Processor() {
 		finesReader = createReader();
@@ -131,6 +131,7 @@ public abstract class Processor {
 			if(finesPerCapita > 0.00009) {
 				output.put(z, truncate(finesPerCapita));
 			}
+			
 		}
 		finesPerCapita = output; //memoize
 		return output;
@@ -158,7 +159,7 @@ public abstract class Processor {
 		//memoize
 		if(strategy.getStrategyType().equals("area" )) {
 			avgResidenceArea.put(zipcode, output);
-		} else {
+		} else if(strategy.getStrategyType().equals("value")) {
 			avgResidenceValue.put(zipcode, output);
 		}
 		return output;
@@ -180,6 +181,60 @@ public abstract class Processor {
 		return output;
 	}
 	
+	
+	//NUMBER 6
+	/**
+	 * Defining ranges as:
+	 * 		low: 250k or less
+	 * 		mid: 251 - 600k
+	 * 		hi:  601k or more
+	 */
+	public Map<String, Double[]> calculateFeatureSix() {
+		if(avgFineByCategory != null) {
+			return avgFineByCategory;
+		}
+		
+		avgFineByCategory = new HashMap<>();
+		//counters for total fine tickets in each category
+		double loCount = 0, midCount = 0, hiCount = 0, runningTotalTickets = 0;
+		//counter for total population in each category
+		double loPopulation = 0, midPopulation = 0, hiPopulation = 0;
+		
+		//Iterate through list of zips and grab its avg marketValue as well as its population
+		for(Integer zip : zipCodes.keySet()) {
+			int currentZipMarketvalue = 0;
+			
+			//check if the value has been precomputed
+			if(avgResidenceValue.containsKey(zip)) {
+				currentZipMarketvalue = avgResidenceValue.get(zip);
+			} else {
+				currentZipMarketvalue = calculateRatio(new ValueStrategy(), zip);
+			}
+			
+			int totalTickets = zipCodes.get(zip).getTotalParkingTickets();
+			int zipPopulation = zipCodes.get(zip).getTotalPopulation();
+	
+			//categorize by marketValue
+			if(currentZipMarketvalue > 600001) {
+				hiCount += totalTickets;
+				hiPopulation += zipPopulation;
+			} else if(currentZipMarketvalue <= 600000 && currentZipMarketvalue >= 250001) {
+				midCount += totalTickets;
+				midPopulation += zipPopulation;
+			} else {
+				loCount += totalTickets;
+				loPopulation += zipPopulation;
+			}
+			runningTotalTickets += totalTickets;
+		}
+		avgFineByCategory.put("lo", new Double[] {loCount/loPopulation, loCount/runningTotalTickets});
+		avgFineByCategory.put("mid", new Double[] {midCount/midPopulation, midCount/runningTotalTickets});
+		avgFineByCategory.put("hi", new Double[] {hiCount/hiPopulation, hiCount/runningTotalTickets});
+		
+		return avgFineByCategory;
+	}
+	
+	
 	public boolean validZip(int zipCode) {
 		return zipProperties.containsKey(zipCode);
 	}
@@ -195,5 +250,16 @@ public abstract class Processor {
 		return (int) Math.floor(d1 / d2);
 	}
 	
+	public static void main(String[] args) {
+		Processor test = new CSVProcessor();
+		test.run();
+		test.makeZipKeys("population.txt");
+		test.placeParkingFines("parking.csv");
+		test.placeProperties("properties.csv");
+		Map<String, Double[]> result = test.calculateFeatureSix();
+		for(String ele : result.keySet()) {
+			System.out.println(ele + "\t" + "AvgFine count: " + result.get(ele)[0] + "\t Fine % of total: " + result.get(ele)[1]);
+		}
+	}
 	
 }

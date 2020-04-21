@@ -98,6 +98,20 @@ public class Main {
 						cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
 					}				
 				}
+				else if(userChoice == 6) {
+					Map<String, Double[]> result = p.calculateFeatureSix(); 
+					for(String key : result.keySet()) {
+						String category = "Low";
+						if(key.equals("hi")) {
+							category = "High";
+						}
+						else if(key.equals("mid")) {
+							category = "Medium";
+						}
+						cw.displayAns(category + "\t Average Fine per person: " + result.get(key)[0] + "\t Fine percentage of total: " + result.get(key)[1]);
+					}
+				}
+				
 			} catch (InputMismatchException e) {
 				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.");
 				cw.resolveBadInput();
@@ -164,6 +178,5 @@ public class Main {
 		// RUN CORE
 		runCore(cw, logger, p);
 	}
-	
 }
 
