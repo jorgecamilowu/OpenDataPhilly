@@ -16,8 +16,10 @@ import edu.upenn.cit594.ui.ConsoleWriter;
 
 /**
  *  @author Kelvin
- *  Runner class for program
- *
+ *  Main and runner class for OpenDataPhilly program. 
+ *  Main instantiates ConsoleWriter, Processor and also handles the Singleton Logger. 
+ *  Main passes return values from Processor to ConsoleWriter and Logger
+ *  Main also handles user input errors and file IO errors
  */
 
 public class Main {
@@ -55,9 +57,17 @@ public class Main {
 		if(!filename.endsWith(".txt") || !filename.endsWith(".TXT")) filename += ".";
 		return filename;
 	}
-
+		
+	/**
+	 * Primary method of main. Runs after all IO error checking and objects are instantiated.
+	 * The program continuously takes user input from console and returns the chosen calculation until the user exits
+	 * 
+	 * @param cw: The instantiated ConsoleWriter. Performs all logging to log file
+	 * @param logger: Singleton logger. Not instanted, just uses single instance
+	 * @param p: The instanted Processor. Performs all calculations
+	 */
 	private static void runCore(ConsoleWriter cw, Logger logger, Processor p) {
-		cw.run();		
+		cw.intro();		
 		int userChoice;
 		while(true) {
 			try {
@@ -82,7 +92,6 @@ public class Main {
 					if(!p.validZip(zip)) {
 						cw.displayAns(0);
 					}
-					//ValueStrategy if option 3, AreaStrategy for option 4
 					else{
 						Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
 						cw.displayAns(p.calculateRatio(strategy, zip));
@@ -146,11 +155,10 @@ public class Main {
 		logger.log(args);
 		
 		// CHECK VALID FILES / FORMATS
-		// IS THIS NECESSARY? SEE ABOVE ADDTXT AND ADDCSV
 		if(!checkFileformat(parkingFormat)) {
 			System.out.println("Invalid fileformat. Terminated"); return;
 		}
-		if(!checkValidFile(parkingFilename) || !checkValidFile(propertyFilename) || !checkValidFile(populationFilename)) {
+		if(!checkValidFile(parkingFilename) && !checkValidFile(propertyFilename) && !checkValidFile(populationFilename)) {
 			System.out.println("Files do not exist. Terminated"); return;
 		}
 		

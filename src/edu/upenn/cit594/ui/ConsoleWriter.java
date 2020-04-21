@@ -3,7 +3,8 @@ package edu.upenn.cit594.ui;
 import java.util.*;
 
 /**
- *  Interaction class between console and user
+ *  ConsoleWriter is responsible for all interaction to the console.
+ *  Both displaying and taking user input
  *  @author Kelvin
  *
  */
@@ -22,9 +23,8 @@ public class ConsoleWriter {
 		return cw;
 	}
 	
-	public void run() {
+	public void intro() {
 		System.out.println("Welcome to OpenDataPhilly!\n\nPlease type in the number of your selection:");
-//		displayPrompt();		
 	}
 	
 	public void stop() {
@@ -50,18 +50,14 @@ public class ConsoleWriter {
 	
 	public int getUserChoice() {
 		System.out.println("Select a task to perform.");
-//		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
-//		scanner.close();
 		return choice;
 	}
 	
 	public int getUserZipCode() {
 		System.out.println("Please enter a zip-code.");
-//		Scanner scanner = new Scanner(System.in);
 		int zipCode = scanner.nextInt();
 		displayZipChosen(zipCode);
-//		scanner.close();
 		return zipCode;
 	}
 	
@@ -79,15 +75,9 @@ public class ConsoleWriter {
 	public void displayAns(double ans) {
 		System.out.println(ans);
 	}
-	
-//	public void displayAns(int ans) {
-//		System.out.println(ans);
-//	}
-	
+		
 	public void displayZipChosen(int zip) {
 		System.out.println("Zip-Code chosen: " + zip);
 	}
 		
-	// PRINT OUT VALUE FROM PROCESSOR
-	
 }

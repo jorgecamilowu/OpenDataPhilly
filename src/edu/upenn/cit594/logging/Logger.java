@@ -3,9 +3,8 @@ package edu.upenn.cit594.logging;
 import java.io.*;
 
 /**
- * Singleton instance of Logger.
- * 
- * Responsible for creating log file, writing current time, zip code
+ * Singleton instance of Logger (following singleton design pattern)
+ * Logger is responsible for creating, writing, and appending to the log file (filename set in Main)
  * @author Kelvin
  *
  */
@@ -21,7 +20,6 @@ public class Logger {
 			System.out.println("Input filename for logger");
 			return;
 		}
-		//file = new File(loggerFilename);
 	}
 	
 	public static Logger getLoggerInstance() {
@@ -36,8 +34,8 @@ public class Logger {
 		
 	/*
 	 * Sets logger filename
-	 * if the logger filename exists, it should append new data to it
-	 * if it doesn't exist, it should create the new file
+	 * If the logger filename exists, it should append new data to it
+	 * If it doesn't exist, it should create the new file
 	 */
 	public static void setLogFile(String filename) {
 		if(!loggerFilename.equals("")) return;
@@ -46,7 +44,6 @@ public class Logger {
 	
 	/*
 	 *  When the program starts, log the current time using System.currentTimeMillis()
-	 *  
 	 *   argsFormat: [fileformat, filename, filename, filename, logfilename]
 	 */
 	public void log(String[] runtimeArgs) {
@@ -99,16 +96,5 @@ public class Logger {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
 		
-		Logger.setLogFile("log.txt");
-		Logger l = Logger.getLoggerInstance();
-		
-		l.log("hi");
-		l.log(3);
-		l.log("hi");
-		l.close();
-	}
-	
 }
