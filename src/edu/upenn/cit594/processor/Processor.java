@@ -25,7 +25,7 @@ public abstract class Processor {
 	protected Map<Integer, Integer> totalMarketvalue;
 	protected Map<Integer, Integer> avgResidenceValue;
 	protected Map<Integer, Integer> avgResidenceArea;
-	protected Map<String, Double[]> avgFineByCategory;
+	protected Map<String, String[]> avgFineByCategory;
 	
 	public Processor() {
 		finesReader = createReader();
@@ -189,7 +189,7 @@ public abstract class Processor {
 	 * 		mid: 251 - 600k
 	 * 		hi:  601k or more
 	 */
-	public Map<String, Double[]> calculateFeatureSix() {
+	public Map<String, String[]> calculateFeatureSix() {
 		if(avgFineByCategory != null) {
 			return avgFineByCategory;
 		}
@@ -227,9 +227,9 @@ public abstract class Processor {
 			}
 			runningTotalTickets += totalTickets;
 		}
-		avgFineByCategory.put("lo", new Double[] {loCount/loPopulation, loCount/runningTotalTickets});
-		avgFineByCategory.put("mid", new Double[] {midCount/midPopulation, midCount/runningTotalTickets});
-		avgFineByCategory.put("hi", new Double[] {hiCount/hiPopulation, hiCount/runningTotalTickets});
+		avgFineByCategory.put("lo", new String[] {truncate(loCount/loPopulation), truncate(loCount/runningTotalTickets)});
+		avgFineByCategory.put("mid", new String[] {truncate(midCount/midPopulation), truncate(midCount/runningTotalTickets)});
+		avgFineByCategory.put("hi", new String[] {truncate(hiCount/hiPopulation), truncate(hiCount/runningTotalTickets)});
 		
 		return avgFineByCategory;
 	}
@@ -249,17 +249,5 @@ public abstract class Processor {
 	private static int truncateDiv(double d1, double d2) {
 		return (int) Math.floor(d1 / d2);
 	}
-	
-	public static void main(String[] args) {
-		Processor test = new CSVProcessor();
-		test.run();
-		test.makeZipKeys("population.txt");
-		test.placeParkingFines("parking.csv");
-		test.placeProperties("properties.csv");
-		Map<String, Double[]> result = test.calculateFeatureSix();
-		for(String ele : result.keySet()) {
-			System.out.println(ele + "\t" + "AvgFine count: " + result.get(ele)[0] + "\t Fine % of total: " + result.get(ele)[1]);
-		}
-	}
-	
+		
 }

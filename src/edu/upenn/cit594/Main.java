@@ -99,7 +99,7 @@ public class Main {
 					}				
 				}
 				else if(userChoice == 6) {
-					Map<String, Double[]> result = p.calculateFeatureSix(); 
+					Map<String, String[]> result = p.calculateFeatureSix(); 
 					for(String key : result.keySet()) {
 						String category = "Low";
 						if(key.equals("hi")) {
@@ -108,8 +108,9 @@ public class Main {
 						else if(key.equals("mid")) {
 							category = "Medium";
 						}
-						cw.displayAns(category + "\t Average Fine per person: " + result.get(key)[0] + "\t Fine percentage of total: " + result.get(key)[1]);
+						cw.displayAns("Property Value: " + category + "\t Average fine per person: " + result.get(key)[0] + "\t Fine % of total: " + result.get(key)[1]);
 					}
+					System.out.println("");
 				}
 				
 			} catch (InputMismatchException e) {

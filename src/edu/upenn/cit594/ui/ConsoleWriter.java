@@ -40,7 +40,7 @@ public class ConsoleWriter {
 				"3: Show average property market value for residences in a specific zip-code" + "\n" +
 				"4: Show average total livable area for residences in a specific zip-code" + "\n" +
 				"5: Show total residential market value per capita in a specific zip-code" + "\n" +
-				"6: Show custom feature \n");
+				"6: Show average number of parking tickets for all zip-codes by market value" + "\n");
 	}
 	
 	public void resolveBadInput() {
