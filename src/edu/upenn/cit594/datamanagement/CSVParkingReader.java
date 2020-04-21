@@ -10,6 +10,8 @@ import edu.upenn.cit594.data.ParkingFine;
 
 /**
  * Reads a .csv parking violations file. 
+ * @author jcwuz
+ *
  */
 public class CSVParkingReader implements Reader<ParkingFine> {
 

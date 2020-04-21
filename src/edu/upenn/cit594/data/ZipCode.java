@@ -1,5 +1,10 @@
 package edu.upenn.cit594.data;
 
+/**
+ * Represents a zip code with its associated values
+ * @author jcwuz
+ *
+ */
 public class ZipCode {
 	private final int code;
 	private int totalPopulation = 0;

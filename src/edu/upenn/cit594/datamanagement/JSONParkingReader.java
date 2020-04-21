@@ -14,6 +14,11 @@ import org.json.simple.parser.ParseException;
 
 import edu.upenn.cit594.data.ParkingFine;
 
+/**
+ * Reads in a .json variant of the parking fines file.
+ * @author jcwuz
+ *
+ */
 public class JSONParkingReader implements Reader<ParkingFine> {
 
 	@Override

@@ -1,5 +1,10 @@
 package edu.upenn.cit594.data;
 
+/**
+ * Represents a single parking fine.
+ * @author jcwuz
+ *
+ */
 public class ParkingFine {
 	private String timestamp;
 	private double fine;

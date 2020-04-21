@@ -117,7 +117,7 @@ public class Main {
 						else if(key.equals("mid")) {
 							category = "Medium";
 						}
-						cw.displayAns("Property Value: " + category + "\t Average fine per person: " + result.get(key)[0] + "\t Fine % of total: " + result.get(key)[1]);
+						cw.displayAns("Property Value: " + category + "\t Average fine tickets per person: " + result.get(key)[0] + "\t Fine % of total: " + result.get(key)[1]);
 					}
 					System.out.println("");
 				}

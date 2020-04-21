@@ -10,6 +10,8 @@ import edu.upenn.cit594.data.ZipCode;
 
 /**
  * Reads in a .txt population file.
+ * @author jcwuz
+ *
  */
 public class PopulationFileReader implements Reader {
 

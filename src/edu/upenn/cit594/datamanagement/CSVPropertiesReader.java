@@ -10,6 +10,8 @@ import edu.upenn.cit594.data.Properties;
 
 /**
  * Reads in a .csv properties file.
+ * @author jcwuz
+ *
  */
 public class CSVPropertiesReader implements Reader<Properties> {
 

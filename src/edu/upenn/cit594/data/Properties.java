@@ -1,5 +1,11 @@
 package edu.upenn.cit594.data;
 
+
+/**
+ * Represents a single property
+ * @author jcwuz
+ *
+ */
 public class Properties {
 	private double marketValue;
 	private double totalLivableArea;

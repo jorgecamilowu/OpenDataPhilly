@@ -41,7 +41,6 @@ public abstract class Processor {
 		totalMarketvalue = new HashMap<>();
 		avgResidenceValue = new HashMap<>();
 		avgResidenceArea = new HashMap<>();
-		// DO WHATEVER ELSE
 	}
 	
 	// Make the memo tables with key as valid zips
@@ -66,12 +65,12 @@ public abstract class Processor {
 			if(validZip(propertyCode)) {
 				zipProperties.get(propertyCode).add(property); // APPEND TO LINKED LIST
 				
-				int currentTotalProperties = zipCodes.get(propertyCode).getTotalNumberProperties();
-				double currentTotalPropertyLiveableArea = zipCodes.get(propertyCode).getTotalPropertyLivableArea();
-				double currentTotalPropertyValue = zipCodes.get(propertyCode).getTotalPropertyValue();
-				zipCodes.get(propertyCode).setTotalNumberProperties(currentTotalProperties + 1);
-				zipCodes.get(propertyCode).setTotalPropertyLivableArea(currentTotalPropertyLiveableArea + property.getTotalLivableArea());
-				zipCodes.get(propertyCode).setTotalPropertyValue(currentTotalPropertyValue + property.getMarketValue());
+				int currentTotalProperties = zipCodes.get(propertyCode).getTotalNumberProperties(); //memoized running total properties
+				double currentTotalPropertyLiveableArea = zipCodes.get(propertyCode).getTotalPropertyLivableArea(); //memoized running total livable area
+				double currentTotalPropertyValue = zipCodes.get(propertyCode).getTotalPropertyValue(); //current corresponding zipcode's residential market value
+				zipCodes.get(propertyCode).setTotalNumberProperties(currentTotalProperties + 1);  //update runnint total number of properties
+				zipCodes.get(propertyCode).setTotalPropertyLivableArea(currentTotalPropertyLiveableArea + property.getTotalLivableArea()); //update running total livable area
+				zipCodes.get(propertyCode).setTotalPropertyValue(currentTotalPropertyValue + property.getMarketValue());  //update running total property market value
 			}
 		}
 		return time;
@@ -90,7 +89,7 @@ public abstract class Processor {
 				zipParkingFines.get(propertyCode).add(parkingFine); // APPEND TO LINKED LIST
 
 				int currentTotalParkingTickets = zipCodes.get(propertyCode).getTotalParkingTickets(); //memoized running total tickets
-				double currentTotalFines = zipCodes.get(propertyCode).getTotalParkingTicketFines(); //memoozed running total fine amount
+				double currentTotalFines = zipCodes.get(propertyCode).getTotalParkingTicketFines(); //memoized running total fine amount
 				double currentPropertyFine = parkingFine.getFine(); //current property's fine amount
 				zipCodes.get(propertyCode).setTotalParkingTickets(currentTotalParkingTickets + 1); //update running total on memoized object
 				zipCodes.get(propertyCode).setTotalParkingTicketFines(currentTotalFines + currentPropertyFine); //update running total fine amount on memoized object
@@ -99,10 +98,10 @@ public abstract class Processor {
 		return time;
 	}
 	
+	// Traverses through Zipcodes and returns sum of population
 	public int calculateTotalPopulation() {
-		//check if value for zipcode was pre-computed.
+		//check if value was pre-computed.
 		if(totalPopulation != 0) {
-			System.out.println("taking from memoized data"); //for testing purposes
 			return totalPopulation;
 		}
 		
@@ -118,9 +117,8 @@ public abstract class Processor {
 	
 	// NUMBER 2
 	public Map<Integer, String> calculateTotalFinesPerCapita() {		
-		//check if value for zipcode was pre-computed.
+		//check if value was pre-computed.
 		if(finesPerCapita != null) {
-			System.out.println("taking from memoized data"); //for testing purposes
 			return finesPerCapita;
 		}
 		
@@ -139,12 +137,10 @@ public abstract class Processor {
 	
 	// NUMBER 3 && NUMBER 4
 	public int calculateRatio(Strategy strategy, int zipcode) {
-		//check if value for zipcode was pre-computed.
+		//check if value was pre-computed.
 		if(avgResidenceArea.containsKey(zipcode) && strategy.getStrategyType().equals("area")) {
-			System.out.println("taking from memoized data"); //for testing purposes
 			return avgResidenceArea.get(zipcode);
 		} else if(avgResidenceValue.containsKey(zipcode) && strategy.getStrategyType().equals("value")) {
-			System.out.println("taking from memoized data"); //for testing purposes
 			return avgResidenceValue.get(zipcode);
 		}
 		if(!validZip(zipcode)) {
@@ -168,9 +164,8 @@ public abstract class Processor {
 	
 	// NUMBER 5
 	public int calculateTotalResidentialMarketValuePerCapita(int zipCode) {
-		//check if value for zipcode was pre-computed.
+		//check if value was pre-computed.
 		if(totalMarketvalue.containsKey(zipCode)) {
-			System.out.println("taking from memoized data"); //for testing purposes
 			return totalMarketvalue.get(zipCode);
 		}
 		if(!validZip(zipCode)) {
