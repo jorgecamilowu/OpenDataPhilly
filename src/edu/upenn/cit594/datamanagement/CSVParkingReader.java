@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import edu.upenn.cit594.data.ParkingFine;
+
+/**
+ * Reads a .csv parking violations file. 
+ */
 public class CSVParkingReader implements Reader<ParkingFine> {
 
 	@Override
@@ -33,6 +37,7 @@ public class CSVParkingReader implements Reader<ParkingFine> {
 					int violationIdentifier = Integer.parseInt(parkingInfo[5]);
 					int zipcode = Integer.parseInt(parkingInfo[6]);
 					
+					//create object and add to output list
 					ParkingFine parkingFineObject = new ParkingFine(timestamp, fine, description, vehicleIdentifier, violationIdentifier, state, zipcode);
 					output.add(parkingFineObject);
 					
@@ -43,19 +48,8 @@ public class CSVParkingReader implements Reader<ParkingFine> {
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return output;
 	}
-	public static void main(String[] args) {
-		Reader test = new CSVParkingReader();
-		long start = System.currentTimeMillis();
-		List<ParkingFine> result = test.read("parking.csv");
-		long end = System.currentTimeMillis();
-		long time = end-start;
-		System.out.println("Run Time: " + time);
-//		System.out.println("in csv: " + result.size());
-	}
-
 }

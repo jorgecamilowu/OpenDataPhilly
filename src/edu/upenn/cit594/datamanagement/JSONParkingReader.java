@@ -29,7 +29,7 @@ public class JSONParkingReader implements Reader<ParkingFine> {
 				//ignore empty lines or potentially faulty input
 				//expecting json objects to contain 7 fields.
 				if(rowContent == null || rowContent.isEmpty() || rowContent.size() != 7) continue;
-				
+				//make sure none of the fields are empty.
 				if(rowContent.get("zip_code").equals("") || rowContent.get("ticket_number").equals("") ||
 						rowContent.get("plate_id").equals("") || rowContent.get("date").equals("") ||
 						rowContent.get("violation").equals("") || rowContent.get("fine").equals("") ||
@@ -46,6 +46,7 @@ public class JSONParkingReader implements Reader<ParkingFine> {
 				int violationIdentifier = Integer.parseInt(rowContent.get("ticket_number").toString());
 				int zipcode = Integer.parseInt(rowContent.get("zip_code").toString());
 			
+				//Create parking fine object and add to output list.
 				ParkingFine parkingFineObject = new ParkingFine(timestamp, fine, description, vehicleIdentifier, violationIdentifier, state, zipcode);
 				output.add(parkingFineObject);
 			}
@@ -59,14 +60,4 @@ public class JSONParkingReader implements Reader<ParkingFine> {
 		
 		return output;
 	}
-	public static void main(String[] args) {
-		Reader test = new JSONParkingReader();
-		long start = System.currentTimeMillis();
-		List<ParkingFine> result = test.read("parking.json");
-		long end = System.currentTimeMillis();
-		long time = end-start;
-		System.out.println("Run Time: " + time);
-//		System.out.println(result);
-	}
-
 }

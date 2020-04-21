@@ -19,3 +19,9 @@
 1587427771625 User Choice: 6
 1587427775993 User Choice: 6
 1587427780742 User Choice: 0
+1587430123438 csv parking.csv properties.csv population.txt log.txt
+1587430123440 population.txt
+1587430123462 properties.csv
+1587430127866 parking.csv
+1587430133067 User Choice: 6
+1587430171727 User Choice: 0

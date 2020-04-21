@@ -215,7 +215,7 @@ public abstract class Processor {
 			int zipPopulation = zipCodes.get(zip).getTotalPopulation();
 	
 			//categorize by marketValue
-			if(currentZipMarketvalue > 600001) {
+			if(currentZipMarketvalue > 600000) {
 				hiCount += totalTickets;
 				hiPopulation += zipPopulation;
 			} else if(currentZipMarketvalue <= 600000 && currentZipMarketvalue >= 250001) {
