@@ -242,7 +242,11 @@ public abstract class Processor {
 	}
 	
 	private static int truncateDiv(double d1, double d2) {
-		return (int) Math.floor(d1 / d2);
+		return (int) Math.floor( d1 / d2);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(truncateDiv(.057897, .077895));
 	}
 		
 }
