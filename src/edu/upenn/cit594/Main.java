@@ -24,7 +24,7 @@ import edu.upenn.cit594.ui.ConsoleWriter;
 
 public class Main {
 	
-	private final static List<String> FILE_FORMATS = Collections.unmodifiableList(
+	private final static Set<String> FILE_FORMATS = new HashSet<>(
             Arrays.asList("csv", ".csv", "json", ".json"));
 
 	public static boolean checkFileformat(String fileformat) {
