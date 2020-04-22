@@ -128,7 +128,10 @@ public class Main {
 				}
 				
 			} catch (NumberFormatException | InputMismatchException e) { 
-				if(userChoice == 4 || userChoice == 5 || userChoice == 3) cw.displayAns("0");
+				if(userChoice == 3 || userChoice == 4 || userChoice == 5) {
+					cw.displayAns("0");
+					userChoice = 0;//clear input
+				}
 				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.\n");
 				continue;
 			}

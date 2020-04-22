@@ -124,3 +124,30 @@
 1587518045032 
 1587518047178 ZipCode: 123456
 1587518069210 User Choice: 0
+1587564005641 json parking.json properties.csv population.txt log.txt
+1587564005660 population.txt
+1587564005685 properties.csv
+1587564010310 parking.json
+1587564012136 User Choice: 3
+1587564027668 User Choice: 0
+1587564187634 json parking.json properties.csv population.txt log.txt
+1587564187655 population.txt
+1587564187674 properties.csv
+1587564192281 parking.json
+1587564196156 User Choice: 0
+1587564347823 json parking.json properties.csv population.txt log.txt
+1587564347840 population.txt
+1587564347858 properties.csv
+1587564352020 parking.json
+1587564353691 User Choice: 3
+1587564364712 User Choice: 0
+1587564689943 json parking.json properties.csv population.txt log.txt
+1587564689961 population.txt
+1587564689977 properties.csv
+1587564694225 parking.json
+1587564697170 User Choice: 3
+1587564702575 User Choice: 2
+1587564706657 User Choice: 4
+1587564733900 User Choice: 3
+1587564738918 000000000000000000000019154
+1587564755342 User Choice: 0
