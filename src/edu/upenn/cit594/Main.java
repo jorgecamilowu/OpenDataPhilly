@@ -68,7 +68,7 @@ public class Main {
 	 */
 	private static void runCore(ConsoleWriter cw, Logger logger, Processor p) {
 		cw.intro();		
-		int userChoice;
+		int userChoice = 0;
 		while(true) {
 			try {
 				cw.displayPrompt();
@@ -127,8 +127,9 @@ public class Main {
 					System.out.println("");
 				}
 				
-			} catch (NumberFormatException | InputMismatchException e) {
-				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.");
+			} catch (NumberFormatException | InputMismatchException e) { 
+				if(userChoice == 4 || userChoice == 5 || userChoice == 3) cw.displayAns("0");
+				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.\n");
 				continue;
 			}
 		}
