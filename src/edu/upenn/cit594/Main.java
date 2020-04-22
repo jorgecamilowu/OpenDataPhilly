@@ -25,7 +25,7 @@ import edu.upenn.cit594.ui.ConsoleWriter;
 public class Main {
 	
 	private final static Set<String> FILE_FORMATS = new HashSet<>(
-            Arrays.asList("csv", ".csv", "json", ".json"));
+            Arrays.asList("csv", "json"));
 
 	public static boolean checkFileformat(String fileformat) {
 		return FILE_FORMATS.contains(fileformat);
@@ -184,14 +184,15 @@ public class Main {
 		
 		// GET PROCESSOR
 		Processor p = null;
-		if(parkingFormat.toLowerCase().equals("csv") || parkingFormat.toLowerCase().equals(".csv")) {
+		if(parkingFormat.equals("csv")) {
 			p = new CSVProcessor();
 			parkingFormat = addCSV(parkingFormat);
 		}
-		else if(parkingFormat.toLowerCase().equals("json") || parkingFormat.toLowerCase().equals(".json")) {
+		else if(parkingFormat.equals("json")) {
 			p = new JSONProcessor();
 			parkingFormat = addJSON(parkingFormat);
 		}
+		
 		System.out.println("Reading in data sets...");
 		p.run();
 		long timePopulation = p.makeZipKeys(populationFilename);
