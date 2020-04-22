@@ -1,4 +1,4 @@
-**OpenDataPhilly :** **Project Report**
+# **OpenDataPhilly :** **Project Report**
 
 *Authors*: Jorge Camilio Wu Zhang, Kelvin Cheung
 
