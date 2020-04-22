@@ -36,3 +36,91 @@
 1587497474148 User Choice: 4
 1587497476274 ZipCode: 19115
 1587497477603 User Choice: 0
+1587497561932 csv parking.csv properties.csv population.txt log.txt
+1587497561934 population.txt
+1587497561956 properties.csv
+1587497566512 parking.csv
+1587497567274 User Choice: 4
+1587497569259 ZipCode: 19115
+1587497572775 User Choice: 4
+1587497573789 ZipCode: 19112
+1587497577591 User Choice: 3
+1587497579301 ZipCode: 19112
+1587497582620 User Choice: 3
+1587497585642 ZipCode: 19139
+1587497588252 User Choice: 5
+1587497590388 ZipCode: 19145
+1587497592330 User Choice: 6
+1587497594247 User Choice: 1
+1587497595290 User Choice: 2
+1587497600316 User Choice: 0
+1587515536438 csv parking.json properties.csv population.txt log.txt
+1587515536440 population.txt
+1587515536462 properties.csv
+1587515540985 parking.json
+1587515552533 User Choice: 6
+1587515555099 User Choice: 2
+1587515556151 User Choice: 4
+1587515556811 User Choice: 1
+1587515557615 User Choice: 0
+1587516053238 json parking.json properties.csv population.txt log.txt
+1587516053255 population.txt
+1587516053271 properties.csv
+1587516057568 parking.json
+1587516059379 User Choice: 6
+1587516062671 User Choice: 2
+1587516064606 User Choice: 4
+1587516066702 ZipCode: 19112
+1587516068874 User Choice: 4
+1587516070026 ZipCode: 19154
+1587516072477 User Choice: 1
+1587516073687 User Choice: 2
+1587516074776 User Choice: 3
+1587516077714 ZipCode: 19112
+1587516080193 User Choice: 3
+1587516081477 User Choice: 0
+1587516084366 User Choice: 3
+1587516086666 User Choice: 3
+1587516088694 User Choice: 0
+1587516089091 User Choice: 0
+1587516120274 json parking.json properties.csv population.txt log.txt
+1587516120289 population.txt
+1587516120304 properties.csv
+1587516124575 parking.json
+1587516129287 User Choice: 2
+1587516142096 User Choice: 1
+1587516142096 User Choice: 0
+1587516157034 json parking.json properties.csv population.txt log.txt
+1587516157052 population.txt
+1587516157069 properties.csv
+1587516161417 parking.json
+1587516164181 User Choice: 1
+1587516174600 User Choice: 1
+1587516174600 User Choice: 3
+1587516176239 User Choice: 0
+1587516177079 User Choice: 0
+1587516973357 json parking.json properties.csv population.txt log.txt
+1587516973373 population.txt
+1587516973388 properties.csv
+1587516977879 parking.json
+1587516991364 
+1587516992675 User Choice: 2
+1587516992679 User Choice: 2
+1587517002075 User Choice: 6
+1587517002076 User Choice: 1
+1587517012409 User Choice: 6
+1587517023454 User Choice: 0
+1587517159041 json parking.json properties.csv population.txt log.txt
+1587517159057 population.txt
+1587517159072 properties.csv
+1587517163352 parking.json
+1587517166077 User Choice: 1
+1587517169304 User Choice: 2
+1587517174595 User Choice: 0
+1587518031268 json parking.json properties.csv population.txt log.txt
+1587518031283 population.txt
+1587518031298 properties.csv
+1587518035611 parking.json
+1587518045032 
+1587518047178 ZipCode: 123456
+1587518069210 User Choice: 0

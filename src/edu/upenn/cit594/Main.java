@@ -72,7 +72,10 @@ public class Main {
 		while(true) {
 			try {
 				cw.displayPrompt();
-				userChoice = cw.getUserChoice();
+				/* .getUserChoice will return a String value. The reason for this is to be able to catch
+				 * white spaces inside of inputs. Main will attempt to parse the choice into integer, and
+				 * if this triggers a NumberFormatException, it will catch it and move on to the next iteration.*/
+				userChoice = Integer.parseInt(cw.getUserChoice());
 				logger.log(userChoice);
 				if(userChoice < 0 || userChoice > 6) {
 					System.out.println("Invalid selection. Please choose between options 0-6"); 
@@ -87,24 +90,26 @@ public class Main {
 					cw.displayAns(p.calculateTotalFinesPerCapita());
 				}
 				else if(userChoice == 3 || userChoice == 4) {
-					int zip = cw.getUserZipCode();
+					String zip = cw.getUserZipCode();
+					int zipInt = Integer.parseInt(zip);
 					logger.log(zip);
-					if(!p.validZip(zip)) {
+					if(!p.validZip(zipInt)) {
 						cw.displayAns(0);
 					}
 					else{
 						Strategy strategy = userChoice == 3 ? new ValueStrategy() : new AreaStrategy();
-						cw.displayAns(p.calculateRatio(strategy, zip));
+						cw.displayAns(p.calculateRatio(strategy, zipInt));
 					}
 				}
 				else if(userChoice == 5) {
-					int zip = cw.getUserZipCode();
+					String zip = cw.getUserZipCode();
+					int zipInt = Integer.parseInt(zip);
 					logger.log(zip);
-					if(!p.validZip(zip)) {
+					if(!p.validZip(zipInt)) {
 						cw.displayAns(0);
 					}
 					else {
-						cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zip));
+						cw.displayAns(p.calculateTotalResidentialMarketValuePerCapita(zipInt));
 					}				
 				}
 				else if(userChoice == 6) {
@@ -122,9 +127,8 @@ public class Main {
 					System.out.println("");
 				}
 				
-			} catch (InputMismatchException e) {
+			} catch (NumberFormatException | InputMismatchException e) {
 				System.out.println("Wrong format input. Menu selections are numbers from 0-6 and ZipCodes are of length 5.");
-				cw.resolveBadInput();
 				continue;
 			}
 		}
@@ -156,10 +160,22 @@ public class Main {
 		
 		// CHECK VALID FILES / FORMATS
 		if(!checkFileformat(parkingFormat)) {
-			System.out.println("Invalid fileformat. Terminated"); return;
+			System.out.println("Invalid fileformat. Terminated"); 
+			return;
 		}
 		if(!checkValidFile(parkingFilename) && !checkValidFile(propertyFilename) && !checkValidFile(populationFilename)) {
-			System.out.println("Files do not exist. Terminated"); return;
+			System.out.println("Files do not exist. Terminated"); 
+			return;
+		}
+		// CHECK CONSISTENCY OF FORMAT AND FILE SPECIFIED
+		if(parkingFormat.equals("csv") && !parkingFilename.matches(".*.csv")) {
+			System.out.println("Passed csv format but provided non .csv file"); 
+			return;
+		}
+		
+		if(parkingFormat.equals("json") && !parkingFilename.matches(".*.json")) {
+			System.out.println("Passed json format but provided non .json file");
+			return;
 		}
 		
 		// GET PROCESSOR

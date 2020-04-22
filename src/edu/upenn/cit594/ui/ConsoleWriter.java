@@ -43,20 +43,30 @@ public class ConsoleWriter {
 				"6: Show average number of parking tickets for all zip-codes by market value" + "\n");
 	}
 	
-	public void resolveBadInput() {
-		scanner.next();
-		return;
-	}
-	
-	public int getUserChoice() {
+//	public void resolveBadInput() {
+//		scanner.nextLine();
+//		return;
+//	}
+
+	/**
+	 * Decided to implement it as a .nextLine() instead of .nextInt()
+	 * because we want to be able to catch inputs with white spaces inside.
+	 * The method will simply return a String value. Main will try to parseInt
+	 * this way if a badly formatted input was given (non numeral, with whitespaces... etc)
+	 * it will throw a NumberFormatException, which Main will catch.
+	 * 
+	 * Comes with the added benefit that if a bad input was caught, we do not have to further call
+	 * a .nextLine() from Scanner to consume the bad input.
+	 */
+	public String getUserChoice() {
 		System.out.println("Select a task to perform.");
-		int choice = scanner.nextInt();
+		String choice = scanner.nextLine();
 		return choice;
 	}
 	
-	public int getUserZipCode() {
+	public String getUserZipCode() {
 		System.out.println("Please enter a zip-code.");
-		int zipCode = scanner.nextInt();
+		String zipCode = scanner.nextLine();
 		displayZipChosen(zipCode);
 		return zipCode;
 	}
@@ -76,7 +86,7 @@ public class ConsoleWriter {
 		System.out.println(ans);
 	}
 		
-	public void displayZipChosen(int zip) {
+	public void displayZipChosen(String zip) {
 		System.out.println("Zip-Code chosen: " + zip);
 	}
 		
