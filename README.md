@@ -44,7 +44,7 @@ its category total population and also the percentage of that total fine
 amount over the three categories. What we found was quite interesting
 and perhaps worth looking into:
 
-![](media/image5.png)
+![](imgs/avgfines.png)
 
 The calculation uses data from the following data sets \[fields\]:
 
@@ -81,7 +81,7 @@ chose them:
 </thead>
 <tbody>
 <tr class="odd">
-<td><p><img src="media/image4.png" style="width:0.3in;height:0.3in" /></p>
+<td><p><img src="imgs/treemap.png" style="width:0.3in;height:0.3in" /></p>
 <p>TreeMap</p></td>
 <td><ul>
 <li><p>TreeMap preserves natural ordering of its elements</p></li>
@@ -109,7 +109,7 @@ chose them:
 </ul></td>
 </tr>
 <tr class="even">
-<td><p><img src="media/image3.png" style="width:0.3in;height:0.3in" /></p>
+<td><p><img src="imgs/linkedlist.png" style="width:0.3in;height:0.3in" /></p>
 <p>LinkedList</p></td>
 <td><ul>
 <li><blockquote>
@@ -142,7 +142,7 @@ chose them:
 </ul></td>
 </tr>
 <tr class="odd">
-<td><p><img src="media/image2.png" style="width:0.3in;height:0.3in" /></p>
+<td><p><img src="imgs/hashset.png" style="width:0.3in;height:0.3in" /></p>
 <p>HashSet</p></td>
 <td><ul>
 <li><blockquote>
@@ -152,7 +152,7 @@ chose them:
 <p>We wanted to store allowed file formats in Main in order to route to appropriate reader:</p>
 </blockquote></li>
 </ul>
-<p><img src="media/image1.png" style="width:4.42708in;height:0.54167in" /></p>
+<p><img src="imgs/example.png" style="width:4.42708in;height:0.54167in" /></p>
 <ul>
 <li><blockquote>
 <p>Since the file formats are unique and checking for file formats using .contains is very fast, we chose HashSet to hold allowable file formats</p>
