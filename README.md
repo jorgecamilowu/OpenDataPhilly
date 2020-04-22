@@ -81,7 +81,7 @@ chose them:
 </thead>
 <tbody>
 <tr class="odd">
-<td><p><img src="imgs/treemap.png" style="width:0.1in;height:0.1in" /></p>
+<!-- <td><p><img src="imgs/treemap.png" style="width:0.1in;height:0.1in" /></p> -->
 <p>TreeMap</p></td>
 <td><ul>
 <li><p>TreeMap preserves natural ordering of its elements</p></li>
@@ -109,7 +109,7 @@ chose them:
 </ul></td>
 </tr>
 <tr class="even">
-<td><p><img src="imgs/linkedlist.png" style="width:0.1in;height:0.1in" /></p>
+<!-- <td><p><img src="imgs/linkedlist.png" style="width:0.1in;height:0.1in" /></p> -->
 <p>LinkedList</p></td>
 <td><ul>
 <li><blockquote>
@@ -142,7 +142,7 @@ chose them:
 </ul></td>
 </tr>
 <tr class="odd">
-<td><p><img src="imgs/hashset.png" style="width:0.1in;height:0.1in" /></p>
+<!-- <td><p><img src="imgs/hashset.png" style="width:0.1in;height:0.1in" /></p> -->
 <p>HashSet</p></td>
 <td><ul>
 <li><blockquote>
