@@ -54,7 +54,7 @@ public class Main {
 	}
 	
 	private static String addTXT(String filename) {
-		if(!filename.endsWith(".txt") || !filename.endsWith(".TXT")) filename += ".";
+		if(!filename.endsWith(".txt") || !filename.endsWith(".TXT")) filename += ".txt";
 		return filename;
 	}
 		
