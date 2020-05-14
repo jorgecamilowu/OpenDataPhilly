@@ -1,4 +1,4 @@
-# **OpenDataPhilly :** **Project Report**
+![](imgs/title.PNG)
 
 *Authors*: Jorge Camilio Wu Zhang, Kelvin Cheung
 
@@ -25,7 +25,7 @@ The software design choices and implementation is shown below as a UML diagram:
 
 ![](imgs/UML.jpeg)
 
-**Additional Feature**
+**Additional Feature:**
 
 In addition to computing average residential market value, total fines
 per capita, etc … We were especially interested in computing the
@@ -65,7 +65,7 @@ total parking fines count by the total population of the zip codes
 belonging to that category. The result is akin to “are richer
 neighborhoods fined more often than poorer neighborhoods”
 
-**Use of Data Structures**
+**Use of Data Structures:**
 
 Our OpenDataPhilly project uses several types of data structures. While
 we’ve overloaded many methods to accept different argument param types,
