@@ -15,7 +15,7 @@ and data formats in order to conduct data analysis and specifically hone our sof
   - > Implementing the strategy method to reduce code duplication
 
   - > Implementing singleton classes to control for a single class
-    > instance
+    > instance (such as logger)
 
   - > Organize classes according to N-tier Architecture
 
